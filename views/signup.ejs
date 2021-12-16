@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("partials/head.ejs") %>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card border border-2">
+            <div class="card-header">
+              <h1 class="h4">Register</h1>
+            </div>
+            <div class="card-body">
+              <!-- Makes POST request to /register route -->
+              <form action="/signup/auth" method="POST">
+                <div class="form-group">
+                  <label for="username"
+                    >Username <span style="color: red">*</span></label
+                  >
+                  <input
+                    type="username"
+                    class="form-control"
+                    name="username"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="username"
+                    >Company <span style="color: red">*</span></label
+                  >
+                  <input
+                    type="username"
+                    class="form-control"
+                    name="company"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="username"
+                    >Location <span style="color: red">*</span></label
+                  >
+                  <input
+                    type="username"
+                    class="form-control"
+                    name="location"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="username">Position</label>
+                  <input type="username" class="form-control" name="position" />
+                </div>
+                <div class="form-group">
+                  <label for="email"
+                    >Email<span style="color: red">*</span></label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    required
+                  />
+                </div>
+                <div class="form-group mb-4">
+                  <label for="password"
+                    >Password<span style="color: red">*</span></label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-dark">signup</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %>
+  </body>
+</html>

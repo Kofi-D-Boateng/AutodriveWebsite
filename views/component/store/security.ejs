@@ -1,0 +1,129 @@
+<button
+  type="button"
+  class="btn btn-success"
+  data-bs-toggle="modal"
+  data-bs-target="#cysaBackdrop"
+>
+  Get Started
+</button>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="cysaBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h5 class="modal-title" id="staticBackdropLabel">
+          Cyber Security Purchase
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="/pricing/purchased" method="POST">
+          <div class="form-check mb-3">
+            <label class="form-check-label" for="order">
+              Cyber Security Package
+            </label>
+            <input
+              class="form-control form-control-sm"
+              type="text"
+              name="order"
+              id="order"
+            />
+          </div>
+          <div class="form-check mb-3">
+            <label class="form-check-label" for="amount"> Duration </label>
+            <input
+              class="form-control form-control-sm"
+              type="text"
+              name="amount"
+              id="amount"
+            />
+          </div>
+          <div class="form-check mb-3">
+            <label class="form-label fs-7" for="regions">Region*</label>
+            <select
+              class="form-select regions"
+              aria-label="Default select example"
+              required
+            >
+              <option selected>United States</option>
+              <option value="1">Canada</option>
+              <option value="2">Europe</option>
+              <option value="3">Japan</option>
+            </select>
+          </div>
+          <div class="form-check mb-3">
+            <label class="form-label fs-6" for="flexCheckIndeterminate"
+              >Full Name*</label
+            >
+            <input
+              class="form-control form-control-sm"
+              type="text"
+              name="fullName"
+              id="flexCheckIndeterminate"
+              required
+            />
+          </div>
+          <div class="form-check mb-3">
+            <label class="form-label fs-6" for="flexCheckIndeterminate"
+              >Email*</label
+            >
+            <input
+              class="form-control form-control-sm"
+              type="email"
+              name="email"
+              id="flexCheckIndeterminate"
+              required
+            />
+          </div>
+          <div class="form-check mb-3">
+            <label class="form-label fs-7" for="flexCheckIndeterminate"
+              >Company*</label
+            >
+            <input
+              class="form-control form-control-sm"
+              type="text"
+              name="company"
+              id="flexCheckIndeterminate"
+              required
+            />
+          </div>
+          <div class="form-check">
+            <label class="form-label fs-6" for="flexCheckIndeterminate"
+              >Phone*</label
+            >
+            <input
+              class="form-control form-control-sm"
+              type="tel"
+              name="phone"
+              id="flexCheckIndeterminate"
+              required
+            />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-success">Accept</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

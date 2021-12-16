@@ -1,0 +1,116 @@
+<section class="container-fluid bg-light">
+  <div class="container-lg pb-5 pt-5">
+    <div class="pricing-banner">
+      <div class="pricing-banner-title">
+        <h1 class="h3">Pricing</h1>
+      </div>
+      <div class="pricing-banner-content">
+        <P> Take a look at our offerings and pick whats right for you. </P>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="row">
+  <div class="col-md-12 text-center pricing-top">
+    <h3>Solutions Pricing</h3>
+  </div>
+</div>
+<br />
+<hr style="color: #528bc6" />
+<div class="container-lg">
+  <div class="row pricing-row">
+    <div class="col-lg-4 cysa">
+      <div class="col-md-12 text-center">
+        <h1 class="h4">Cyber Security</h1>
+        <hr />
+      </div>
+      <div class="col-lg-12">
+        <br />
+        <h1 class="pricing-card-title">
+          $150<small class="text-muted fw-light">/mo</small>
+        </h1>
+        <br />
+        <hr />
+      </div>
+      <div class="col-md-12 solution-info">
+        <p>Consultation and protection of your business's security.</p>
+        <p class="text-muted">* $15 per host after max reached.</p>
+      </div>
+      <div class="col-md-12 solution-items">
+        <ul class="offerings">
+          <li>Pentesting</li>
+          <li>Consultation</li>
+          <li>Vulnerability Scanning (Max. 10 host)</li>
+          <li>Compiled Reporting</li>
+        </ul>
+      </div>
+      <div class="d-grid col 6 purchase-button">
+        <%- include("./security.ejs")%>
+      </div>
+    </div>
+    <!--Machine Learning Pricing-->
+    <div class="col-lg-4">
+      <div class="col-md-12 text-center">
+        <h1 class="h4">Machine Learning</h1>
+        <hr />
+      </div>
+      <div class="col-md-12">
+        <br />
+        <h1 class="pricing-card-title text-center">
+          $100<small class="text-muted fw-light">/per volume</small>
+        </h1>
+        <br />
+        <hr />
+      </div>
+      <div class="col-md-12 solution-info">
+        <p style="text-align: left">
+          Data Analytics based on your business's metadata.
+        </p>
+        <p class="text-muted">* Price doubles based on volume(300MB)</p>
+      </div>
+      <div class="col-md-12 solution-items">
+        <ul class="offerings">
+          <li>Expenses Handling analysis</li>
+          <li>Consumer Bias analysis</li>
+          <li>Neural Network analysis</li>
+          <li>Data Analysis Reports</li>
+        </ul>
+      </div>
+      <div class="d-grid col 6 purchase-button">
+        <%- include("./learning-modal.ejs")%>
+      </div>
+    </div>
+    <!--Web Development-->
+    <div class="col-lg-4">
+      <div class="col-md-12 text-center">
+        <h1 class="h4">Web Development</h1>
+        <hr />
+      </div>
+      <div class="col-md-12">
+        <br />
+        <h1 class="pricing-card-title text-center">
+          $150<small class="text-muted fw-light">/page</small>
+        </h1>
+        <br />
+        <hr />
+      </div>
+      <div class="col-md-12 solution-info">
+        <p style="text-align: left">
+          Front-End and Back-End pages made for your business
+        </p>
+        <p class="text-muted">* Pages are priced separately</p>
+      </div>
+      <div class="col-md-12 solution-items">
+        <ul class="offerings">
+          <li>Customized Front-End pages</li>
+          <li>Database configuration</li>
+          <li>Testing of security prior to deployment</li>
+          <li class="text-muted">* Native App coming soon</li>
+        </ul>
+      </div>
+      <div class="d-grid col 6 purchase-button">
+        <%- include("./dev-modal.ejs")%>
+      </div>
+    </div>
+  </div>
+</div>

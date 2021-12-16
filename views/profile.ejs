@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("partials/head.ejs") %>
+  </head>
+  <body>
+    <%- include(navbar) %>
+    <!--Account Set Up-->
+    <section class="container-fluid pt-5">
+      <div class="container-lg pt-3 mt-5">
+        <div class="row account-layout-wrapper pt-3">
+          <%- include("component/account/personal-info.ejs") %> <%-
+          include("component/account/account-elements") %>
+        </div>
+      </div>
+    </section>
+    <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %>
+  </body>
+</html>

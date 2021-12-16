@@ -1,0 +1,19 @@
+<div class="col-sm-12 mt-5 pb-3">
+  <div class="account-purchases">
+    <div class="user-info-title pb-4">
+      <h1 class="h5"><i class="fas fa-shopping-cart"></i> Purchases</h1>
+    </div>
+    <div class="user-info-content d-grid gap-5">
+      <ul>
+        <% for(let i=0; i< purchases.length; i++){ %>
+        <li><%= purchases[i] %></li>
+        <% } %>
+      </ul>
+      <form action="/profile/purchased-items/:id" method="post">
+        <button class="btn btn-dark btn-sm" type="submit">
+          Download your purchases.
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

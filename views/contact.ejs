@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('partials/head.ejs') %> <%- include(navbar) %>
+  </head>
+  <body>
+    <div class="container-lg" id="contact-box">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="col">
+            <h2 class="font-weight-light">Contact Customer Service</h2>
+            <p>
+              We would love to hear from you. Now you connect with us anytime!
+            </p>
+          </div>
+          <div class="row" id="email-box">
+            <div class="col">
+              <h1 class="h5">Send us an email</h1>
+              <p class="text-muted" style="font-size: 1rem">
+                * Your name and company will be required for a quick reponse.
+              </p>
+              <a
+                href="mailto:helpfromautodrive@gmail.com"
+                role="button"
+                class="btn btn-social btn-google"
+                ><li class="fas fa-envelope"></li>
+                Send an email</a
+              >
+            </div>
+          </div>
+          <div class="div-divider"></div>
+          <div class="row" id="twitter-box">
+            <div class="col">
+              <h1 class="h5">Reach our support team on twitter</h1>
+              <p class="text-muted" style="font-size: 1rem">
+                * Your name and company will be required for a quick reponse.
+              </p>
+              <a
+                href="https://twitter.com/AutodriveHelp"
+                role="button"
+                target="_blank"
+                class="btn btn-social btn-twitter"
+                id="twitter-btn"
+                ><li class="fab fa-twitter"></li>
+                Twitter Support</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <img
+            style="width: 100%"
+            src="/public/photos/contact.svg"
+            alt="mail.svg"
+          />
+        </div>
+      </div>
+    </div>
+    <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %>
+  </body>
+</html>

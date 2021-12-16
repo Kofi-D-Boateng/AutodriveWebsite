@@ -1,0 +1,80 @@
+<div class="col-md-12 mt-4 pt-4">
+  <div class="account-destruction">
+    <div class="user-info-title">
+      <h1 class="h5">
+        <i class="fas fa-exclamation-triangle"></i> Account Destruction
+      </h1>
+    </div>
+    <div class="destruction-modal mt-4">
+      <!-- Button trigger modal -->
+      <button
+        type="button"
+        class="btn btn-dark btn-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#destroyModal"
+      >
+        Destroy my account
+      </button>
+      <!-- Modal -->
+      <form action="/profile/:id" method="post">
+        <div
+          class="modal fade"
+          id="destroyModal"
+          tabindex="-1"
+          aria-labelledby="destroyModal"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  Do you want destroy your account?
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="destroy-disclaimer">
+                  <p class="fs-6">
+                    Once account is destroyed, all cookies, sessions, and
+                    purchases will be wiped.
+                  </p>
+                </div>
+                <div class="destroy-verification">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="destroy"
+                      id="destroyCheckbox"
+                    />
+                    <label class="form-check-label" for="destroyCheckbox"
+                      >I WANT TO DESTROY MY ACCOUNT</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-outline-success btn-sm"
+                  style="color: green"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-danger btn-sm">
+                  Destroy
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("partials/head.ejs") %>
+  </head>
+  <body>
+    <%- include("partials/navbar.ejs") %>
+    <!--LOG IN PAGE-->
+    <div class="container-fluid mt-5 pt-5" id="main-bg">
+      <div class="container-lg">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="d-grid col-md-12">
+              <div class="mb-5 border-bottom">
+                <h1 class="h5 text-center">Log in to your account</h1>
+              </div>
+              <div class="card border border-2">
+                <div class="card-header">
+                  <h1 class="h4">Login</h1>
+                </div>
+                <div class="card-body">
+                  <!-- Makes POST request to /register route -->
+                  <form action="/login/auth" method="POST">
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input
+                        type="username"
+                        class="form-control"
+                        name="username"
+                      />
+                    </div>
+                    <div class="form-group mb-4">
+                      <label for="password">Password</label>
+                      <input
+                        type="password"
+                        class="form-control"
+                        name="password"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      class="btn btn-outline-secondary col-6"
+                    >
+                      login
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="forgot-pwd">
+              <a href="/forgot-password" class="text-decoration-none"
+                >Forgot password</a
+              >
+            </div>
+            <div class="signup-message pb-5">
+              <p>
+                Don't have an account?<a
+                  class="ms-2 text-decoration-none fs-5"
+                  href="/signup"
+                  >Sign Up</a
+                >
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="OAuth-logins">
+              <div class="oauth-title">
+                <h1 class="h5">Log in via:</h1>
+              </div>
+              <div class="oauth-holder d-grid gap-4 mt-4 pt-4">
+                <div class="twitter">
+                  <a class="btn btn-block btn-social btn-facebook">
+                    <span class="fab fa-facebook"></span> Sign in with Facebook
+                  </a>
+                </div>
+                <div class="twitter">
+                  <a class="btn btn-block btn-social btn-google">
+                    <span class="fab fa-google"></span> Sign in with Google
+                  </a>
+                </div>
+                <div class="twitter">
+                  <a class="btn btn-block btn-social btn-github">
+                    <span class="fab fa-github"></span> Sign in with Github
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %>
+  </body>
+</html>

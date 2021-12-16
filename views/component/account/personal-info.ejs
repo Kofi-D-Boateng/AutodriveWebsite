@@ -1,0 +1,32 @@
+<div class="col-md-6 account-items">
+  <div class="user-banner">
+    <div class="user-image">
+      <label class="profile-label" title="Change picture" for="image">
+        <img
+          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+          id="profile-image"
+          alt="img.png"
+        />
+      </label>
+      <input type="file" name="image" id="image" style="display: none" />
+    </div>
+
+    <div class="user-bio mt-5 pt-3 pb-3">
+      <div class="d-grid gap-2">
+        <div class="col-7 d-flex">
+          <p class="fs-6">User: <%= currentUser %></p>
+        </div>
+        <div class="col-7 d-flex">
+          <p class="fs-6">Company: <%= currentCompany%></p>
+        </div>
+        <div class="col-7 d-flex">
+          <p class="fs-6">Location: <%= currentLocation%></p>
+        </div>
+        <div class="col-7 d-flex">
+          <p class="fs-6">Position: <%= currentPosition%></p>
+        </div>
+      </div>
+    </div>
+    <hr class="div-dividers mb-5" style="width: 50%" />
+  </div>
+</div>

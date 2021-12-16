@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("partials/head.ejs") %>
+  </head>
+  <body>
+    <%- include(navbar) %>
+
+    <section class="container-fluid bg-light pb-5 pt-5">
+      <div class="container-lg">
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="h2 fw-normal">Machine Learning</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <p>Leverage your personal data to get ahead of the competition.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="align-items-center container-lg mt-5 pt-5">
+      <div class="container-lg">
+        <div class="row mt-5 mb-5 pb-5">
+          <div class="align-items-center col-md-6 mt-2">
+            <img
+              style="width: 100%"
+              src="public/photos/data-meeting.jpg"
+              alt="data-meeting.png"
+            />
+          </div>
+          <div style="margin-left: 10px" class="col-md-5">
+            <div class="row">
+              <div class="col-md-12">
+                <h2 class="fw-bold text-left h4">
+                  Adjust your assest confidently.
+                </h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 mt-2">
+                <p class="fs-5">
+                  Make expanding your business easier with the help of AutoDrive
+                  analytics. We can help you build data reports and
+                  visualizations that will help make decisions easier based on
+                  your company's KPIs.
+                </p>
+                <p class="text-muted mt-1 fs-6">* Metrics used:</p>
+                <ul>
+                  <li>End Of Year Profits</li>
+                  <li>Company margins</li>
+                  <li>Company expenditures</li>
+                </ul>
+                <div class="col-4 text-left">
+                  <a role="button" href="/pricing" class="btn btn-danger btn-sm"
+                    >Get Autodrive Analytics</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-5 pb-5 pt-5">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-12">
+                <h1 class="h4 fw-bold">Thinking Big Data</h1>
+              </div>
+              <div class="row">
+                <div class="col-md-12 mt-2">
+                  <p class="fs-5">
+                    Stay ahead of the marketing game with AutoDrive's neural
+                    network package. We take your metadata and perform machine
+                    learning based on that data, and supply you with a detailed
+                    report to give you the insight you need.
+                  </p>
+                  <p class="fs-6 mt-1 text-muted">
+                    * Types of machine learning
+                  </p>
+                  <ul>
+                    <li>Supervised Learning</li>
+                    <li>Unsupervised Learning</li>
+                    <li>Neural Networks</li>
+                  </ul>
+                  <div class="mb-5 col-3 text-left">
+                    <a
+                      role="button"
+                      href="/pricing"
+                      class="btn btn-danger btn-sm"
+                      >Get machine learning</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <img
+              style="width: 100%"
+              src="public/photos/analytics.jpg"
+              alt="analytics.png"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %>
+  </body>
+</html>
