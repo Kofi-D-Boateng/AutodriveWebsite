@@ -5,8 +5,8 @@
     </div>
     <div class="user-info-content d-grid gap-5">
       <ul>
-        <% for(let i=0; i< purchases.length; i++){ %>
-        <li><%= purchases[i] %></li>
+        <% for(let i=0; i< 5; i++){ %>
+        <li>Order: <%= purchases %>; Duration: <%=duration%></li>
         <% } %>
       </ul>
       <form action="/profile/purchased-items/:id" method="post">

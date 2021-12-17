@@ -10,7 +10,6 @@
       </label>
       <input type="file" name="image" id="image" style="display: none" />
     </div>
-
     <div class="user-bio mt-5 pt-3 pb-3">
       <div class="d-grid gap-2">
         <div class="col-7 d-flex">
@@ -25,6 +24,53 @@
         <div class="col-7 d-flex">
           <p class="fs-6">Position: <%= currentPosition%></p>
         </div>
+      </div>
+    </div>
+    <div class="profile-edit-button col-md-6">
+      <a
+        class="btn btn-dark btn-sm"
+        data-bs-toggle="collapse"
+        href="#collapseEditForm"
+        >Edit your profile</a
+      >
+      <div class="collapse mt-4" id="collapseEditForm">
+        <form action="/profile/update/:id" method="post">
+          <div class="d-grid mb-2">
+            <input
+              class="form-control form-control-sm"
+              type="text"
+              name="username"
+              placeholder="Username"
+            />
+          </div>
+          <div class="d-grid mb-2">
+            <input
+              class="form-control form-control-sm"
+              type="text"
+              name="company"
+              placeholder="Company"
+            />
+          </div>
+          <div class="d-grid mb-2">
+            <input
+              class="form-control form-control-sm"
+              type="text"
+              name="location"
+              placeholder="Location"
+            />
+          </div>
+          <div class="d-grid mb-2">
+            <input
+              class="form-control form-control-sm"
+              type="text"
+              name="position"
+              placeholder="Position"
+            />
+          </div>
+          <button class="btn btn-success btn-sm col-12" type="submit">
+            Save
+          </button>
+        </form>
       </div>
     </div>
     <hr class="div-dividers mb-5" style="width: 50%" />

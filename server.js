@@ -12,6 +12,7 @@ const multer = require("multer");
 var createError = require("http-errors");
 var cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
+const favicon = require("serve-favicon");
 
 // ROUTES REQUIRED
 const main = require("./routes/main");
@@ -52,6 +53,7 @@ app.set("view engine", "ejs");
 app.set("view cache", false);
 
 // MIDDLEWARE
+app.use(favicon(__dirname + "/public/favicon.ico"));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

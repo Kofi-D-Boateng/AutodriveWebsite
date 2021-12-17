@@ -20,11 +20,11 @@ router.post("/auth", function (req, res) {
       let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
       if (!err && user) {
         passport.authenticate("local")(req, res, function () {
-          res.redirect("/");
+          res.redirect("/profile");
         });
       } else {
         console.log("Entry failed" + err);
-        res.render("signup");
+        res.redirect("/signup");
       }
     }
   );
