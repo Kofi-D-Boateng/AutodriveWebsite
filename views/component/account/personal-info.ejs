@@ -1,34 +1,29 @@
 <div class="col-md-6 account-items">
   <div class="user-banner">
     <div class="user-image">
-      <label class="profile-label" title="Change picture" for="image">
-        <img
-          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-          id="profile-image"
-          alt="img.png"
-        />
+      <label for="imageInput" title="Change profile picture">
+        <img src="/profile/<%=userPFP%>" id="profile-image" alt="img.png" />
       </label>
-      <input type="file" name="image" id="image" style="display: none" />
+      <form
+        method="POST"
+        action="/profile/avatar"
+        enctype="multipart/form-data"
+      >
+        <input
+          type="file"
+          accpet="image/*"
+          name="avatar"
+          id="imageInput"
+          style="display: none"
+        />
+        <button class="btn btn-dark btn-sm col-5 mt-3" type="submit">
+          Change profile picture
+        </button>
+      </form>
     </div>
-    <div class="user-bio mt-5 pt-3 pb-3">
-      <div class="d-grid gap-2">
-        <div class="col-7 d-flex">
-          <p class="fs-6">User: <%= currentUser %></p>
-        </div>
-        <div class="col-7 d-flex">
-          <p class="fs-6">Company: <%= currentCompany%></p>
-        </div>
-        <div class="col-7 d-flex">
-          <p class="fs-6">Location: <%= currentLocation%></p>
-        </div>
-        <div class="col-7 d-flex">
-          <p class="fs-6">Position: <%= currentPosition%></p>
-        </div>
-      </div>
-    </div>
-    <div class="profile-edit-button col-md-6">
+    <div class="profile-edit-button col-md-6 mt-3 pt-3">
       <a
-        class="btn btn-dark btn-sm"
+        class="btn btn-dark btn-sm col-10"
         data-bs-toggle="collapse"
         href="#collapseEditForm"
         >Edit your profile</a
@@ -73,6 +68,21 @@
         </form>
       </div>
     </div>
-    <hr class="div-dividers mb-5" style="width: 50%" />
+    <div class="user-bio col-md-6 mt-3 pt-3 pb-3">
+      <div class="d-grid col-12 gap-2">
+        <div class="">
+          <p class="fs-6">User: <%= currentUser %></p>
+        </div>
+        <div class="">
+          <p class="fs-6">Company: <%= currentCompany%></p>
+        </div>
+        <div class="">
+          <p class="fs-6">Location: <%= currentLocation%></p>
+        </div>
+        <div class="">
+          <p class="fs-6">Position: <%= currentPosition%></p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

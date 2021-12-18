@@ -37,6 +37,9 @@ p {
   .profile-edit-button {
     margin: 0 0 10% 0;
   }
+  .profile-edit-button a {
+    max-width: 43%;
+  }
 }
 
 // button {
@@ -328,6 +331,10 @@ input {
 
 /* Account */
 
+.account_items {
+  text-align: center;
+}
+
 .user-image label {
   overflow: hidden;
   width: 40%;
@@ -336,7 +343,7 @@ input {
 #profile-image {
   max-width: 100%;
 }
-.profile-label:hover {
+#profile-image:hover {
   cursor: pointer;
   transition: 0.3s;
 }

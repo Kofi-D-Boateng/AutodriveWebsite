@@ -1,3 +1,5 @@
+"use-strict";
+
 var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
 
@@ -32,6 +34,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
     phone: { type: String, trim: true, validate: /^\d{10}$/ },
+    userimage: String,
     googleId: String,
   },
   { timestamps: true }

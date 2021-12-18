@@ -3,11 +3,14 @@ const express = require("express");
 var router = express.Router();
 const User = require("../models/user");
 const passport = require("passport");
-const multer = require("multer");
 const { parse } = require("json2csv");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const { uploadFile, getFileStream } = require("./s3");
+const util = require("util");
+const fs = require("fs");
+const unLinkFile = util.promisify(fs.unlink);
 
-// Profile Avatar
-const upload = multer({ dest: "upload" });
 // ACCOUNT ROUTES
 
 // GET THE ACCOUNT
@@ -38,10 +41,49 @@ router.get("/", function (req, res) {
           currentPosition: req.user.position,
           memberStatus: createdDate,
           navbar: navbarLoggedIn,
+          userPFP: req.user.userimage,
         });
       }
     });
   } else {
+    res.redirect("login");
+  }
+});
+
+// GRAB PROFILE PICTURE
+router.get("/:key", (req, res) => {
+  if (req.isAuthenticated()) {
+    const key = req.params.key;
+    const readStream = getFileStream(key);
+    console.log(
+      "\n GRAB THIS FOR CONDITIONAL RENDERING " + readStream["Key"] + "\n"
+    );
+    readStream.pipe(res);
+  }
+});
+
+// UPLOAD PROFILE PICTURE
+
+router.post("/avatar", upload.single("avatar"), async (req, res) => {
+  if (req.isAuthenticated()) {
+    const file = req.file;
+    console.log("THIS IS THE FILE. LOOK FOR FILENAME--> " + file + "\n");
+    const result = await uploadFile(file);
+    console.log(result["Key"] + " FOUND KEY" + "\n");
+    User.findOne({ username: req.user.username }, (err, foundUser) => {
+      if (foundUser) {
+        foundUser.userimage = result["Key"];
+        foundUser.save((err) => {
+          if (err) {
+            console.log("THIS IS A SAVING ERROR--> " + err);
+          }
+        });
+      }
+    });
+    await unLinkFile(file.path);
+    res.redirect("/profile");
+  } else {
+    console.log("UNSUCCESSFUL POST");
     res.redirect("login");
   }
 });
@@ -63,53 +105,28 @@ router.post("/update/:id", (req, res) => {
             position: req.body.position,
           };
           switch (true) {
-            // PASSED TEST
+            // PASSED TEST SWITCH STATEMENT NEEDS TO BE SCOPED
             case newUpdate.username !== "" &&
               newUpdate.username !== User.find({ username: { $ne: null } }):
               foundUser.username = newUpdate["username"];
-              foundUser.save((err) => {
-                if (err) {
-                  console.log("THERE WAS AN ERROR(username): " + err + "\n");
-                } else {
-                  console.log("SUCCESSFULLY CHANGED USERNAME ");
-                }
-              });
-              break;
-            case newUpdate.company !== "":
+            case newUpdate.company !== null || newUpdate.company >= 3:
               foundUser.company = newUpdate["company"];
-              foundUser.save((err) => {
-                if (err) {
-                  console.log("THERE WAS AN ERROR(company): " + err + "\n");
-                } else {
-                  console.log("SUCCESSFULLY CHANGED COMPANY");
-                }
-              });
-              break;
-            case newUpdate.location !== "":
+            case newUpdate.location !== null || newUpdate.location >= 3:
               foundUser.location = newUpdate["location"];
-              foundUser.save((err) => {
-                if (err) {
-                  console.log("THERE WAS AN ERROR(location): " + err + "\n");
-                } else {
-                  console.log("SUCCESSFULLY CHANGED LOCATION");
-                }
-              });
-              break;
-            case newUpdate.position !== "":
+            case newUpdate.position !== null || newUpdate.position >= 3:
               foundUser.position = newUpdate["position"];
-              foundUser.save((err) => {
-                if (err) {
-                  console.log("THERE WAS AN ERROR(position): " + err + "\n");
-                } else {
-                  console.log("SUCCESSFULLY CHANGED POSITION");
-                }
-              });
               break;
-
             default:
               console.log("FAILED TO ENTER ANYTHING" + err + "\n");
               break;
           }
+          foundUser.save((err) => {
+            if (err) {
+              console.log("THERE WAS AN ERROR: " + err + "\n");
+            } else {
+              console.log("SUCCESSFULLY CHANGED POSITION");
+            }
+          });
           res.redirect("/profile");
         } else {
           console.log("FOUND THE ANSWER" + err + "\n");
