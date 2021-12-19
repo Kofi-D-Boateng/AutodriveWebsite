@@ -342,6 +342,9 @@ input {
 
 #profile-image {
   max-width: 100%;
+  width: auto;
+  height: auto;
+  max-height: 100%;
 }
 #profile-image:hover {
   cursor: pointer;

@@ -104,29 +104,29 @@ router.post("/update/:id", (req, res) => {
             location: req.body.location,
             position: req.body.position,
           };
-          switch (true) {
-            // PASSED TEST SWITCH STATEMENT NEEDS TO BE SCOPED
-            case newUpdate.username !== "" &&
-              newUpdate.username !== User.find({ username: { $ne: null } }):
+          while (newUpdate) {
+            if (
+              newUpdate.username.trim().length >= 3 &&
+              newUpdate.username !== User.find({ username: { $ne: null } })
+            ) {
               foundUser.username = newUpdate["username"];
-            case newUpdate.company !== null || newUpdate.company >= 3:
-              foundUser.company = newUpdate["company"];
-            case newUpdate.location !== null || newUpdate.location >= 3:
-              foundUser.location = newUpdate["location"];
-            case newUpdate.position !== null || newUpdate.position >= 3:
-              foundUser.position = newUpdate["position"];
-              break;
-            default:
-              console.log("FAILED TO ENTER ANYTHING" + err + "\n");
-              break;
-          }
-          foundUser.save((err) => {
-            if (err) {
-              console.log("THERE WAS AN ERROR: " + err + "\n");
-            } else {
-              console.log("SUCCESSFULLY CHANGED POSITION");
             }
-          });
+            if (newUpdate.company.trim().length >= 3) {
+              foundUser.company = newUpdate["company"];
+            }
+            if (newUpdate.location.trim().length >= 3) {
+              foundUser.location = newUpdate["location"];
+            }
+            if (newUpdate.position.trim().length >= 3) {
+              foundUser.position = newUpdate["position"];
+            }
+            foundUser.save((err) => {
+              if (err) {
+                console.log(err);
+              }
+            });
+            break;
+          }
           res.redirect("/profile");
         } else {
           console.log("FOUND THE ANSWER" + err + "\n");
