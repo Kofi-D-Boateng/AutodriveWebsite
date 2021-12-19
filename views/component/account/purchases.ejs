@@ -3,14 +3,10 @@
     <div class="user-info-title pb-4">
       <h1 class="h5"><i class="fas fa-shopping-cart"></i> Purchases</h1>
     </div>
-    <div class="user-info-content d-grid gap-5">
-      <ul>
-        <% for(let i=0; i< 5; i++){ %>
-        <li>Order: <%= purchases %>; Duration: <%=duration%></li>
-        <% } %>
-      </ul>
-      <form action="/profile/purchased-items/:id" method="post">
-        <button class="btn btn-dark btn-sm" type="submit">
+    <div class="user-info-content d-grid gap-3">
+      <p class="fs-5">Download a copy of your purchases</p>
+      <form action="/profile/purchased-items/:id" method="GET">
+        <button id="export-csv" class="btn btn-dark btn-sm">
           Download your purchases.
         </button>
       </form>

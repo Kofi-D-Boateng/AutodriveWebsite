@@ -75,16 +75,6 @@ app.use("/login", login);
 app.use("/signup", signup);
 app.use("/forgot-password", forgot_password);
 
-const upload = multer({ dest: "upload" });
-
-app.post("/images", upload.single("image"), (req, res) => {
-  const file = req.params.file;
-  const info = req.body.description;
-  console.log(file);
-  console.log(info);
-  res.render(err);
-});
-
 // Logout
 app.get("/logout", function (req, res) {
   res.clearCookie("connect.sid");

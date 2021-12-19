@@ -2,8 +2,11 @@
 const express = require("express");
 var router = express.Router();
 const User = require("../models/user");
-const passport = require("passport");
-const { parse } = require("json2csv");
+require("passport");
+const {
+  Parser,
+  transforms: { unwind },
+} = require("json2csv");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const { uploadFile, getFileStream } = require("./s3");
@@ -25,16 +28,8 @@ router.get("/", function (req, res) {
         let dateObj = req.user.createdAt;
         let createdDate = dateObj.toString().slice(4, 16);
         // PURCHASE ARRAY *WORK ON THIS TOMORROW*
-        var array = foundUser.purchases;
-        for (let i = 0; i < array.length; i++) {
-          var newObject = array[i];
-        }
-        let purchasedOrder = newObject && newObject["order"];
-        let purchasedDuration = newObject && newObject["amount"];
 
         res.render("profile", {
-          purchases: purchasedOrder,
-          duration: purchasedDuration,
           currentUser: req.user.username,
           currentCompany: req.user.company,
           currentLocation: req.user.location,
@@ -140,13 +135,25 @@ router.post("/update/:id", (req, res) => {
 
 // THIS NEEDS TO BE FIXED////////
 // DOWNLOADING CSV OF PURCHASES
-router.post("/purchased-items/:id", (req, res) => {
+router.get("/purchased-items/:id", (req, res) => {
   if (req.isAuthenticated()) {
-    User.findById({ _id: req.params.id }, (err, foundUser) => {
+    User.findOne({ id: req.params.id }, (err, foundUser) => {
       if (!foundUser) {
         console.log(err);
+        res.redirect("profile");
       } else {
         console.log(foundUser);
+        const userPurchases = foundUser.purchases;
+        const fields = ["order", "amount"];
+        const json2cvsParser = new Parser({ fields });
+        try {
+          const csv = json2cvsParser.parse(userPurchases);
+          res.attachment(`${req.user.username}-purchases.csv`);
+          res.status(200).send(csv);
+        } catch (error) {
+          console.log("error:", error.message);
+          res.status(500).send(error.message);
+        }
       }
     });
   }
