@@ -1,7 +1,7 @@
 "use strict";
 const express = require("express");
 var router = express.Router();
-const User = require("../models/user");
+const User = require("../../models/user");
 require("passport");
 const {
   Parser,

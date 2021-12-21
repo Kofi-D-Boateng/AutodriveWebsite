@@ -1,3 +1,4 @@
+"use-strict";
 var express = require("express");
 var router = express.Router();
 
@@ -5,9 +6,9 @@ router.get("/", (req, res) => {
   let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
   let navbar = "partials/navbar.ejs";
   if (req.isAuthenticated()) {
-    res.render("home", { navbar: navbarLoggedIn });
+    res.render("../views/home", { navbar: navbarLoggedIn });
   } else {
-    res.render("home", { navbar: navbar });
+    res.render("../views/home", { navbar: navbar });
   }
 });
 router.get("/development", (req, res) => {

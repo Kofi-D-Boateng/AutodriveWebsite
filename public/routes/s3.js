@@ -4,7 +4,7 @@ const multer = require("multer");
 const multerS3 = require("multer-s3");
 const express = require("express");
 var router = express.Router();
-const User = require("../models/user");
+const User = require("../../models/user");
 const passport = require("passport");
 const fs = require("fs");
 

@@ -15,19 +15,34 @@ const flash = require("connect-flash");
 const favicon = require("serve-favicon");
 
 // ROUTES REQUIRED
-const main = require("./routes/main");
-const about = require("./routes/about");
-const contact = require("./routes/contact");
-const profile = require("./routes/profile");
-const pricing = require("./routes/pricing");
-const help = require("./routes/help");
-const login = require("./routes/login");
-const signup = require("./routes/signup");
-const forgot_password = require("./routes/forgot-password");
+
+const main = require("./public/routes/main.js");
+const about = require("./public/routes/about.js");
+const contact = require("./public/routes/contact.js");
+const profile = require("./public/routes/profile.js");
+const pricing = require("./public/routes/pricing.js");
+const help = require("./public/routes/help.js");
+const login = require("./public/routes/login.js");
+const signup = require("./public/routes/signup.js");
+const forgot_password = require("./public/routes/forgot-password.js");
 
 // PORT
 const port = 3000;
 const app = express();
+
+// VIEWS SETUP
+app.set("views", path.join(__dirname + "/views"));
+app.set("view engine", "ejs");
+app.set("view cache", false);
+
+// MIDDLEWARE
+app.use(favicon(__dirname + "/public/favicon.ico"));
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use("/public", express.static("public"));
+app.use(flash());
 
 // COOKIES AND SESSION
 app.use(
@@ -46,20 +61,6 @@ require("./config/database.js");
 
 // PASSPORT AUTHENTICATION
 require("./config/passport.js");
-
-// VIEWS SETUP
-app.set("views", path.join(__dirname + "/views"));
-app.set("view engine", "ejs");
-app.set("view cache", false);
-
-// MIDDLEWARE
-app.use(favicon(__dirname + "/public/favicon.ico"));
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use("/public", express.static(path.join(__dirname + "/public")));
-app.use(flash());
 
 // ROUTES
 
