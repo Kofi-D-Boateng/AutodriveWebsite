@@ -14,12 +14,12 @@ router.get("/", (req, res) => {
   if (req.isAuthenticated()) {
     res.render("contact", {
       navbar: navbarLoggedIn,
-      teamEmail: process.env.TEAM_EMAIL,
+      teamEmail: "mailto:helpfromautodrive@gmail.com",
     });
   } else {
     res.render("contact", {
       navbar: navbar,
-      teamEmail: process.env.TEAM_EMAIL,
+      teamEmail: "mailto:helpfromautodrive@gmail.com",
     });
   }
 });

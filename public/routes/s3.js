@@ -10,9 +10,9 @@ const fs = require("fs");
 
 // AWS SETUP
 const region = "us-east-2";
-const bucketName = process.env.AWS_BUCKET_NAME;
-const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-const secretAccessKey = process.env.AWS_ACCESS_KEY_SECRET;
+const bucketName = "autodrive-photos";
+const accessKeyId = "AKIAYIMUVV5D6XVBEW2R";
+const secretAccessKey = "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";
 
 const s3 = new aws.S3({
   region,

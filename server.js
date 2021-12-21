@@ -47,7 +47,7 @@ app.use(flash());
 // COOKIES AND SESSION
 app.use(
   session({
-    secret: process.env.SECRET,
+    secret: "thisisastring",
     resave: false,
     saveUninitialized: true,
   })
