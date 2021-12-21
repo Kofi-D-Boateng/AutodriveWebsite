@@ -30,7 +30,9 @@ const userSchema = new mongoose.Schema(
     purchases: [
       {
         order: String,
-        amount: String,
+        duration: String,
+        asset: String,
+        name: String,
       },
     ],
     phone: { type: String, trim: true, validate: /^\d{10}$/ },

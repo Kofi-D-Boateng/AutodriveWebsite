@@ -144,7 +144,7 @@ router.get("/purchased-items/:id", (req, res) => {
       } else {
         console.log(foundUser);
         const userPurchases = foundUser.purchases;
-        const fields = ["order", "amount"];
+        const fields = ["name", "order", "duration", "asset"];
         const json2cvsParser = new Parser({ fields });
         try {
           const csv = json2cvsParser.parse(userPurchases);

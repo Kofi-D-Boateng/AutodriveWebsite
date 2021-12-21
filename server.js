@@ -8,7 +8,7 @@ const passport = require("passport");
 const path = require("path");
 const ejs = require("ejs");
 const logger = require("morgan");
-const multer = require("multer");
+
 var createError = require("http-errors");
 var cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
@@ -81,7 +81,7 @@ app.get("/logout", function (req, res) {
   res.redirect("/");
 });
 
-app.listen(port, (err, done) => {
+app.listen(process.env.PORT || port, (err, done) => {
   if (!err) {
     console.log({ message: "success!" });
   } else {

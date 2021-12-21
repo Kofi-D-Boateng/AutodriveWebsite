@@ -2,25 +2,24 @@
   type="button"
   class="btn btn-success"
   data-bs-toggle="modal"
-  data-bs-target="#wdBackdrop"
+  data-bs-target="#webDevBackdrop"
 >
-  Get Started
+  Purchase Web Development
 </button>
 <!-- Modal -->
 <div
-  class="modal fade text-left"
-  id="wdBackdrop"
-  data-bs-backdrop="static"
+  class="modal fade"
+  id="webDevBackdrop"
   data-bs-keyboard="false"
   tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
+  aria-labelledby="webDevBackdropLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-dialog-scrollable">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">
-          Web Development Purchase
+      <div class="modal-header text-center">
+        <h5 class="modal-title" id="webDevBackdropLabel">
+          Web Development Bundle
         </h5>
         <button
           type="button"
@@ -29,91 +28,77 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">
-        <form action="/" method="POST">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="flexCheckIndeterminate"
-            />
-            <label class="form-check-label" for="flexCheckIndeterminate">
-              Web Development Package
-            </label>
-          </div>
-          <br />
-          <br />
-          <br />
-          <div class="form-check mb-3">
-            <label class="form-label fs-7" for="regions">Region*</label>
-            <select
-              class="form-select regions"
-              aria-label="Default select example"
-              required
-            >
-              <option selected>United States</option>
-              <option value="1">Canada</option>
-              <option value="2">Europe</option>
-              <option value="3">Japan</option>
-            </select>
-          </div>
-          <div class="form-check mb-3">
-            <label class="form-label fs-6" for="flexCheckIndeterminate"
-              >Full Name*</label
-            >
-            <input
-              class="form-control form-control-sm"
-              type="text"
-              value=""
-              id="flexCheckIndeterminate"
-              required
-            />
-          </div>
-          <div class="form-check mb-3">
-            <label class="form-label fs-6" for="flexCheckIndeterminate"
-              >Email*</label
-            >
-            <input
-              class="form-control form-control-sm"
-              type="email"
-              value=""
-              id="flexCheckIndeterminate"
-              required
-            />
-          </div>
-          <div class="form-check mb-3">
-            <label class="form-label fs-7" for="flexCheckIndeterminate"
-              >Company*</label
-            >
-            <input
-              class="form-control form-control-sm"
-              type="text"
-              value=""
-              id="flexCheckIndeterminate"
-              required
-            />
-          </div>
-          <div class="form-check">
-            <label class="form-label fs-6" for="flexCheckIndeterminate"
-              >Phone*</label
-            >
-            <input
-              class="form-control form-control-sm"
-              type="tel"
-              value=""
-              id="flexCheckIndeterminate"
-              required
-            />
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button type="button" class="btn btn-success" onClick="">Accept</button>
-      </div>
+      <form action="/pricing/purchased" method="post">
+        <div class="modal-body">
+          <select
+            class="form-select mb-3"
+            name="duration"
+            aria-label="timeTable"
+            required
+          >
+            <option value="">Timetable for completion</option>
+            <option value="One month">One month</option>
+            <option value="Two months">Two months</option>
+            <option value="Three Months">Three Months</option>
+            <option value="Four Months">Four Months</option>
+            <option value="Five Months">Five Months</option>
+            <option value="Six Months">Six Months</option>
+            <option value="Seven Months">Seven Months</option>
+            <option value="Eight Months">Eight Months</option>
+            <option value="Nine Months">Nine Months</option>
+            <option value="Ten Months">Ten Months</option>
+            <option value="Eleven Months">Eleven Months</option>
+            <option value="One Year">One Year</option>
+            <option value="One Year">One Year +</option>
+          </select>
+          <select
+            class="form-select mb-3"
+            name="asset"
+            aria-label="orderType"
+            required
+          >
+            <option value="">Select Area of Work</option>
+            <option value="Front End">Front End</option>
+            <option value="Back End">Back End</option>
+            <option value="Full Stack">Full Stack</option>
+          </select>
+          <input
+            class="form-control mb-3"
+            type="text"
+            name="host"
+            placeholder="Number of Front-end pages (e.g: six pages)"
+            required
+          />
+          <input
+            class="form-control mb-3"
+            type="text"
+            name="fullName"
+            placeholder="Full Name"
+            required
+          />
+          <p class="fs-6 fw-bold">
+            * If you are selecting full stack please read our guidelines for
+            Full Stack at <a href="/help">Help</a>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="submit"
+            name="order"
+            value="Web Development"
+            class="btn btn-outline-success"
+          >
+            Purchase
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

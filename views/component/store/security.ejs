@@ -1,27 +1,25 @@
+<!-- Button trigger modal -->
 <button
   type="button"
   class="btn btn-success"
   data-bs-toggle="modal"
-  data-bs-target="#cysaBackdrop"
+  data-bs-target="#secBackdrop"
 >
-  Get Started
+  Purchase Security
 </button>
 <!-- Modal -->
 <div
   class="modal fade"
-  id="cysaBackdrop"
-  data-bs-backdrop="static"
+  id="secBackdrop"
   data-bs-keyboard="false"
   tabindex="-1"
   aria-labelledby="staticBackdropLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-dialog-scrollable">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h5 class="modal-title" id="staticBackdropLabel">
-          Cyber Security Purchase
-        </h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Security Bundle</h5>
         <button
           type="button"
           class="btn-close"
@@ -29,101 +27,54 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">
-        <form action="/pricing/purchased" method="POST">
-          <div class="form-check mb-3">
-            <label class="form-check-label" for="order">
-              Cyber Security Package
-            </label>
-            <input
-              class="form-control form-control-sm"
-              type="text"
-              name="order"
-              id="order"
-            />
-          </div>
-          <div class="form-check mb-3">
-            <label class="form-check-label" for="amount"> Duration </label>
-            <input
-              class="form-control form-control-sm"
-              type="text"
-              name="amount"
-              id="amount"
-            />
-          </div>
-          <div class="form-check mb-3">
-            <label class="form-label fs-7" for="regions">Region*</label>
-            <select
-              class="form-select regions"
-              aria-label="Default select example"
-              required
-            >
-              <option selected>United States</option>
-              <option value="1">Canada</option>
-              <option value="2">Europe</option>
-              <option value="3">Japan</option>
-            </select>
-          </div>
-          <div class="form-check mb-3">
-            <label class="form-label fs-6" for="flexCheckIndeterminate"
-              >Full Name*</label
-            >
-            <input
-              class="form-control form-control-sm"
-              type="text"
-              name="fullName"
-              id="flexCheckIndeterminate"
-              required
-            />
-          </div>
-          <div class="form-check mb-3">
-            <label class="form-label fs-6" for="flexCheckIndeterminate"
-              >Email*</label
-            >
-            <input
-              class="form-control form-control-sm"
-              type="email"
-              name="email"
-              id="flexCheckIndeterminate"
-              required
-            />
-          </div>
-          <div class="form-check mb-3">
-            <label class="form-label fs-7" for="flexCheckIndeterminate"
-              >Company*</label
-            >
-            <input
-              class="form-control form-control-sm"
-              type="text"
-              name="company"
-              id="flexCheckIndeterminate"
-              required
-            />
-          </div>
-          <div class="form-check">
-            <label class="form-label fs-6" for="flexCheckIndeterminate"
-              >Phone*</label
-            >
-            <input
-              class="form-control form-control-sm"
-              type="tel"
-              name="phone"
-              id="flexCheckIndeterminate"
-              required
-            />
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-danger"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="submit" class="btn btn-success">Accept</button>
-          </div>
-        </form>
-      </div>
+      <form action="/pricing/purchased" method="post">
+        <div class="modal-body">
+          <select
+            class="form-select mb-3"
+            aria-label="Default select example"
+            name="duration"
+            required
+          >
+            <option value="">Select duration</option>
+            <option value=">One month">One month</option>
+            <option value="Three months (Quarterly)">
+              Three months (Quarterly)
+            </option>
+            <option value="Annualy (Year)">Annualy (Year)</option>
+          </select>
+          <input
+            class="form-control mb-3"
+            type="text"
+            name="asset"
+            placeholder="Number of Host (25 host)"
+            required
+          />
+          <input
+            class="form-control"
+            type="text"
+            name="fullName"
+            placeholder="Full Name"
+            required
+          />
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="submit"
+            name="order"
+            value="Cyber-Security"
+            class="btn btn-outline-success"
+          >
+            Purchase
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

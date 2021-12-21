@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
-
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 var User = require("../models/user");
 
 router
@@ -20,7 +21,9 @@ router
       console.log("WE HAVE HIT THE POST ROUTE");
       let newPurchase = {
         order: req.body.order,
-        amount: req.body.amount,
+        duration: req.body.duration,
+        asset: req.body.asset,
+        name: req.body.fullName,
       };
       console.log(newPurchase);
       let id = req.user.id;
