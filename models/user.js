@@ -2,6 +2,7 @@
 
 var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
+require("../config/database");
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -36,7 +37,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
     phone: { type: String, trim: true, validate: /^\d{10}$/ },
-    userimage: String,
+    userimage: { type: String, default: "c2d993a9788cf64656ec07b7079177ea" },
     googleId: String,
   },
   { timestamps: true }

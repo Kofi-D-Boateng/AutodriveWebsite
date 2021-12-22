@@ -1,18 +1,17 @@
 "use-strict";
 const aws = require("aws-sdk");
-const multer = require("multer");
-const multerS3 = require("multer-s3");
+require("dotenv").config;
 const express = require("express");
 var router = express.Router();
-const User = require("../../models/user");
+const User = require("../models/user");
 const passport = require("passport");
 const fs = require("fs");
 
 // AWS SETUP
-const region = "us-east-2";
-const bucketName = "autodrive-photos";
-const accessKeyId = "AKIAYIMUVV5D6XVBEW2R";
-const secretAccessKey = "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";
+const region = process.env.AWS_BUCKET_REGION;
+const bucketName = process.env.AWS_BUCKET_NAME;
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_ACCESS_KEY_SECRET;
 
 const s3 = new aws.S3({
   region,

@@ -16,15 +16,15 @@ const favicon = require("serve-favicon");
 
 // ROUTES REQUIRED
 
-const main = require("./public/routes/main.js");
-const about = require("./public/routes/about.js");
-const contact = require("./public/routes/contact.js");
-const profile = require("./public/routes/profile.js");
-const pricing = require("./public/routes/pricing.js");
-const help = require("./public/routes/help.js");
-const login = require("./public/routes/login.js");
-const signup = require("./public/routes/signup.js");
-const forgot_password = require("./public/routes/forgot-password.js");
+const main = require("./routes/main.js");
+const about = require("./routes/about.js");
+const contact = require("./routes/contact.js");
+const profile = require("./routes/profile.js");
+const pricing = require("./routes/pricing.js");
+const help = require("./routes/help.js");
+const login = require("./routes/login.js");
+const signup = require("./routes/signup.js");
+const forgot_password = require("./routes/forgot-password.js");
 
 // PORT
 const port = 3000;

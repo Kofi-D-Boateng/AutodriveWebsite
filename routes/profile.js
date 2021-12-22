@@ -1,7 +1,8 @@
 "use strict";
 const express = require("express");
 var router = express.Router();
-const User = require("../../models/user");
+const User = require("../models/user");
+
 require("passport");
 const {
   Parser,
@@ -84,15 +85,16 @@ router.post("/avatar", upload.single("avatar"), async (req, res) => {
 });
 
 // MAKING UPDATES
-router.post("/update/:id", (req, res) => {
+router.post("/update", (req, res) => {
   console.log("UPDATING ROUTE HIT \n");
-
   try {
     console.log("MADE IT INSIDE THE TRY ROUTE \n");
     if (req.isAuthenticated()) {
-      User.findOne({ id: req.params.id }, (err, foundUser) => {
+      User.findOne({ username: req.user.username }, (err, foundUser) => {
         if (foundUser) {
-          console.log("FOUND USER \n");
+          console.log(
+            "FOUND USER \n" + foundUser + "\n" + req.params.id + "\n"
+          );
           const newUpdate = {
             username: req.body.username,
             company: req.body.company,
@@ -138,11 +140,7 @@ router.post("/update/:id", (req, res) => {
 router.get("/purchased-items/:id", (req, res) => {
   if (req.isAuthenticated()) {
     User.findOne({ id: req.params.id }, (err, foundUser) => {
-      if (!foundUser) {
-        console.log(err);
-        res.redirect("profile");
-      } else {
-        console.log(foundUser);
+      if (foundUser) {
         const userPurchases = foundUser.purchases;
         const fields = ["name", "order", "duration", "asset"];
         const json2cvsParser = new Parser({ fields });
@@ -160,7 +158,7 @@ router.get("/purchased-items/:id", (req, res) => {
 });
 
 // REMOVING ACCOUNT FROM DATABASE
-router.post("/:id", (req, res) => {
+router.post("/account/delete", (req, res) => {
   if (req.isAuthenticated()) {
     let checkedBox = req.body.destroy;
     if (checkedBox === "on") {
