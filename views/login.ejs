@@ -6,6 +6,11 @@
   <body>
     <%- include("partials/navbar.ejs") %>
     <!--LOG IN PAGE-->
+    <%for(let i=0; i < errors.length; i++){ %>
+    <div class="container invalidAlert py-4 text-center">
+      <div class="alert alert-danger" role="alert"><%=errors[i]%></div>
+    </div>
+    <%}%>
     <div class="container-fluid mt-5 pt-5" id="main-bg">
       <div class="container-lg">
         <div class="row">

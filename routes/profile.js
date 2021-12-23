@@ -20,6 +20,7 @@ const unLinkFile = util.promisify(fs.unlink);
 // GET THE ACCOUNT
 router.get("/", function (req, res) {
   console.log("THE ROUTE WAS FINALLY HIT \n");
+  const success = req.flash().success || [];
   if (req.isAuthenticated()) {
     // QUERY FOR ORDERS
     let id = req.user.id;
@@ -31,6 +32,7 @@ router.get("/", function (req, res) {
         // PURCHASE ARRAY *WORK ON THIS TOMORROW*
 
         res.render("profile", {
+          error,
           currentUser: req.user.username,
           currentCompany: req.user.company,
           currentLocation: req.user.location,
@@ -148,6 +150,7 @@ router.get("/purchased-items/:id", (req, res) => {
           const csv = json2cvsParser.parse(userPurchases);
           res.attachment(`${req.user.username}-purchases.csv`);
           res.status(200).send(csv);
+          req.flash("success", "successful download");
         } catch (error) {
           console.log("error:", error.message);
           res.status(500).send(error.message);
@@ -160,11 +163,12 @@ router.get("/purchased-items/:id", (req, res) => {
 // REMOVING ACCOUNT FROM DATABASE
 router.post("/account/delete", (req, res) => {
   if (req.isAuthenticated()) {
+    console.log(req);
     let checkedBox = req.body.destroy;
     if (checkedBox === "on") {
-      User.findOneAndRemove({ id: req.params.id })
+      User.findOneAndRemove({ username: req.user.username })
         .then(
-          req.flash("Success", "Your account was deleted"),
+          req.flash("deletion", "Your account was deleted"),
           req.destroy(),
           req.logout(),
           res.redirect("/")

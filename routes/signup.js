@@ -4,7 +4,8 @@ const passport = require("passport");
 var User = require("../models/user");
 
 router.get("/", function (req, res) {
-  res.render("signup");
+  const signupErrors = req.flash().error || [];
+  res.render("signup", { signupErrors });
 });
 router.post("/auth", function (req, res) {
   User.register(
@@ -20,10 +21,10 @@ router.post("/auth", function (req, res) {
       let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
       if (!err && user) {
         passport.authenticate("local")(req, res, function () {
-          res.redirect("/profile");
+          res.redirect("/");
         });
       } else {
-        console.log("Entry failed" + err);
+        req.flash("error", "Username or email has already been taken");
         res.redirect("/signup");
       }
     }

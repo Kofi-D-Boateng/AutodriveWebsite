@@ -79,6 +79,7 @@ app.use("/forgot-password", forgot_password);
 // Logout
 app.get("/logout", function (req, res) {
   res.clearCookie("connect.sid");
+  req.flash("success", "Successfully logged out");
   res.redirect("/");
 });
 

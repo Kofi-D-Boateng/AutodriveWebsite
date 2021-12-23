@@ -5,10 +5,12 @@ var router = express.Router();
 router.get("/", (req, res) => {
   let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
   let navbar = "partials/navbar.ejs";
+  const success = req.flash().success || [];
+  const deletion = req.flash().deletion || [];
   if (req.isAuthenticated()) {
-    res.render("../views/home", { navbar: navbarLoggedIn });
+    res.render("../views/home", { navbar: navbarLoggedIn, success, deletion });
   } else {
-    res.render("../views/home", { navbar: navbar });
+    res.render("../views/home", { navbar: navbar, success, deletion });
   }
 });
 router.get("/development", (req, res) => {
