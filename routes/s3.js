@@ -1,10 +1,6 @@
 "use-strict";
 const aws = require("aws-sdk");
 require("dotenv").config;
-const express = require("express");
-var router = express.Router();
-const User = require("../models/user");
-const passport = require("passport");
 const fs = require("fs");
 
 // AWS SETUP

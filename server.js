@@ -43,6 +43,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/public", express.static("public"));
 app.use(flash());
+app.use((err, req, res, next) => {});
 
 // COOKIES AND SESSION
 app.use(

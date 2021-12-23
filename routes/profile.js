@@ -20,7 +20,7 @@ const unLinkFile = util.promisify(fs.unlink);
 // GET THE ACCOUNT
 router.get("/", function (req, res) {
   console.log("THE ROUTE WAS FINALLY HIT \n");
-  const success = req.flash().success || [];
+  const error = req.flash().error || [];
   if (req.isAuthenticated()) {
     // QUERY FOR ORDERS
     let id = req.user.id;
@@ -103,28 +103,34 @@ router.post("/update", (req, res) => {
             location: req.body.location,
             position: req.body.position,
           };
-          while (newUpdate) {
-            if (
-              newUpdate.username.trim().length >= 3 &&
-              newUpdate.username !== User.find({ username: { $ne: null } })
-            ) {
-              foundUser.username = newUpdate["username"];
-            }
-            if (newUpdate.company.trim().length >= 3) {
-              foundUser.company = newUpdate["company"];
-            }
-            if (newUpdate.location.trim().length >= 3) {
-              foundUser.location = newUpdate["location"];
-            }
-            if (newUpdate.position.trim().length >= 3) {
-              foundUser.position = newUpdate["position"];
-            }
-            foundUser.save((err) => {
-              if (err) {
-                console.log(err);
+          if (!newUpdate) {
+            req.flash("error", "There is no input to update");
+            res.redirect("/profile");
+            return;
+          } else {
+            while (newUpdate) {
+              if (
+                newUpdate.username.trim().length >= 3 &&
+                newUpdate.username !== User.find({ username: { $ne: null } })
+              ) {
+                foundUser.username = newUpdate["username"];
               }
-            });
-            break;
+              if (newUpdate.company.trim().length >= 3) {
+                foundUser.company = newUpdate["company"];
+              }
+              if (newUpdate.location.trim().length >= 3) {
+                foundUser.location = newUpdate["location"];
+              }
+              if (newUpdate.position.trim().length >= 3) {
+                foundUser.position = newUpdate["position"];
+              }
+              foundUser.save((err) => {
+                if (err) {
+                  console.log(err);
+                }
+              });
+              break;
+            }
           }
           res.redirect("/profile");
         } else {

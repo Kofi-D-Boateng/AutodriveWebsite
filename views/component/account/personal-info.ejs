@@ -15,6 +15,8 @@
           name="avatar"
           id="imageInput"
           style="display: none"
+          required
+          title="Click on image first."
         />
         <button class="btn btn-dark btn-sm col-5 mt-3" type="submit">
           Change profile picture
@@ -29,7 +31,12 @@
         >Edit your profile</a
       >
       <div class="collapse mt-4" id="collapseEditForm">
-        <form action="/profile/update" method="post">
+        <form
+          class="updateForm"
+          onsubmit="formValidation()"
+          action="/profile/update"
+          method="post"
+        >
           <div class="d-grid mb-2">
             <input
               class="form-control form-control-sm"
