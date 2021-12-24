@@ -1,10 +1,7 @@
 "use-strict";
-
 var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
 require("../config/database");
-
-var ObjectId = mongoose.Schema.Types.ObjectId;
 
 const userSchema = new mongoose.Schema(
   {

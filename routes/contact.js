@@ -1,12 +1,7 @@
+"use strict";
 var express = require("express");
 var router = express.Router();
-
 require("dotenv").config();
-// MAILGUN TEST
-// const formData = require("form-data");
-// const Mailgun = require("mailgun.js");
-// const mailgun = new Mailgun(formData);
-// const mg = mailgun.client({ username: "api", key: process.env.MAILGUN_API });
 
 router.get("/", (req, res) => {
   let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
@@ -14,12 +9,12 @@ router.get("/", (req, res) => {
   if (req.isAuthenticated()) {
     res.render("contact", {
       navbar: navbarLoggedIn,
-      teamEmail: "mailto:helpfromautodrive@gmail.com",
+      teamEmail: process.env.TEAM_EMAIL,
     });
   } else {
     res.render("contact", {
       navbar: navbar,
-      teamEmail: "mailto:helpfromautodrive@gmail.com",
+      teamEmail: process.env.TEAM_EMAIL,
     });
   }
 });

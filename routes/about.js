@@ -1,6 +1,7 @@
+"use strict";
 var express = require("express");
 var router = express.Router();
-var passport = require("passport");
+require("passport");
 
 router.get("/", (req, res) => {
   let navbarLoggedIn = "partials/loggedIn-navbar";

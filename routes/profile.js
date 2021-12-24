@@ -2,7 +2,6 @@
 const express = require("express");
 var router = express.Router();
 const User = require("../models/user");
-
 require("passport");
 const {
   Parser,
@@ -14,8 +13,25 @@ const { uploadFile, getFileStream } = require("./s3");
 const util = require("util");
 const fs = require("fs");
 const unLinkFile = util.promisify(fs.unlink);
+const rateLimiter = require("express-rate-limit");
 
-// ACCOUNT ROUTES
+// Rate-limiting ruleset
+const accountAbuseLimiter = rateLimiter({
+  windowMs: 2 * 60 * 1000, //2 minutes
+  max: 5, //MAXIMUM request for all users to API/All routes (DDoS prohibitor)
+  message: "Too change requests. Please try again later.",
+});
+const deleteAbuseLimiter = rateLimiter({
+  windowMs: 5 * 60 * 1000, //5 minutes
+  max: 1, //MAXIMUM request for all users to API/All routes (DDoS prohibitor)
+  message:
+    "Request for deletion has exceeded alotted amount. If abuse is found, your IP will be blocked",
+});
+const csvAbuseLimiter = rateLimiter({
+  windowMs: 2 * 60 * 1000, //2 minutes
+  max: 20, //MAXIMUM request for all users to API/All routes (DDoS prohibitor)
+  message: "Too many request for purchases were made. PLease try again later.",
+});
 
 // GET THE ACCOUNT
 router.get("/", function (req, res) {
@@ -49,7 +65,7 @@ router.get("/", function (req, res) {
 });
 
 // GRAB PROFILE PICTURE
-router.get("/:key", (req, res) => {
+router.get("/:key", async (req, res) => {
   if (req.isAuthenticated()) {
     const key = req.params.key;
     const readStream = getFileStream(key);
@@ -62,37 +78,42 @@ router.get("/:key", (req, res) => {
 
 // UPLOAD PROFILE PICTURE
 
-router.post("/avatar", upload.single("avatar"), async (req, res) => {
-  if (req.isAuthenticated()) {
-    const file = req.file;
-    console.log("THIS IS THE FILE. LOOK FOR FILENAME--> " + file + "\n");
-    const result = await uploadFile(file);
-    console.log(result["Key"] + " FOUND KEY" + "\n");
-    User.findOne({ username: req.user.username }, (err, foundUser) => {
-      if (foundUser) {
-        foundUser.userimage = result["Key"];
-        foundUser.save((err) => {
-          if (err) {
-            console.log("THIS IS A SAVING ERROR--> " + err);
-          }
-        });
-      }
-    });
-    await unLinkFile(file.path);
-    res.redirect("/profile");
-  } else {
-    console.log("UNSUCCESSFUL POST");
-    res.redirect("login");
+router.post(
+  "/avatar",
+  upload.single("avatar"),
+  accountAbuseLimiter,
+  async (req, res) => {
+    if (req.isAuthenticated()) {
+      const file = req.file;
+      console.log("THIS IS THE FILE. LOOK FOR FILENAME--> " + file + "\n");
+      const result = await uploadFile(file);
+      console.log(result["Key"] + " FOUND KEY" + "\n");
+      User.findOne({ username: req.user.username }, (err, foundUser) => {
+        if (foundUser) {
+          foundUser.userimage = result["Key"];
+          foundUser.save((err) => {
+            if (err) {
+              console.log("THIS IS A SAVING ERROR--> " + err);
+            }
+          });
+        }
+      });
+      await unLinkFile(file.path);
+      res.redirect("/profile");
+    } else {
+      console.log("UNSUCCESSFUL POST");
+      res.redirect("login");
+    }
   }
-});
+);
 
 // MAKING UPDATES
-router.post("/update", (req, res) => {
+router.post("/update", accountAbuseLimiter, async (req, res) => {
   console.log("UPDATING ROUTE HIT \n");
   try {
     console.log("MADE IT INSIDE THE TRY ROUTE \n");
     if (req.isAuthenticated()) {
-      User.findOne({ username: req.user.username }, (err, foundUser) => {
+      await User.findOne({ username: req.user.username }, (err, foundUser) => {
         if (foundUser) {
           console.log(
             "FOUND USER \n" + foundUser + "\n" + req.params.id + "\n"
@@ -145,7 +166,7 @@ router.post("/update", (req, res) => {
 
 // THIS NEEDS TO BE FIXED////////
 // DOWNLOADING CSV OF PURCHASES
-router.get("/purchased-items/:id", (req, res) => {
+router.get("/purchased-items/:id", csvAbuseLimiter, (req, res) => {
   if (req.isAuthenticated()) {
     User.findOne({ id: req.params.id }, (err, foundUser) => {
       if (foundUser) {
@@ -167,7 +188,7 @@ router.get("/purchased-items/:id", (req, res) => {
 });
 
 // REMOVING ACCOUNT FROM DATABASE
-router.post("/account/delete", (req, res) => {
+router.post("/account/delete", deleteAbuseLimiter, (req, res) => {
   if (req.isAuthenticated()) {
     console.log(req);
     let checkedBox = req.body.destroy;

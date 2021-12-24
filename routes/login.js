@@ -1,6 +1,15 @@
+"use strict";
 var express = require("express");
 var router = express.Router();
 const passport = require("passport");
+const rateLimiter = require("express-rate-limit");
+
+// Rate-limiting ruleset
+const loginAccountLimiter = rateLimiter({
+  windowMs: 2 * 60 * 1000, //2 minutes
+  max: 5, //MAXIMUM request for all users to API/All routes (DDoS prohibitor)
+  message: "Too many login attempts. Please try again later.",
+});
 
 router.route("/").get(function (req, res) {
   let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
@@ -14,6 +23,7 @@ router.route("/").get(function (req, res) {
 });
 router.post(
   "/auth",
+  loginAccountLimiter,
   passport.authenticate("local", {
     failureFlash: true,
     successMessage: true,

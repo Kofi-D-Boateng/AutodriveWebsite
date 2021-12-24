@@ -1,10 +1,16 @@
 var express = require("express");
 var router = express.Router();
-const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 var User = require("../models/user");
 var nodemailer = require("nodemailer");
 var smtpTransport = require("nodemailer-smtp-transport");
+const rateLimiter = require("express-rate-limit");
+
+// Rate-limiting ruleset
+const accountPurchaseLimiter = rateLimiter({
+  windowMs: 10 * 60 * 1000, //10 minutes
+  max: 5, //MAXIMUM request for all users to API/All routes (DDoS prohibitor)
+  message: "Too many Purchase attempts. Please try again later.",
+});
 
 router.get("/", function (req, res) {
   let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
@@ -17,7 +23,7 @@ router.get("/", function (req, res) {
 });
 
 // PURCHASING AND RECEIPT
-router.post("/purchased", function (req, res) {
+router.post("/purchased", accountPurchaseLimiter, async (req, res) => {
   // SMTP  INSTANTIATION
   var transport = nodemailer.createTransport(
     smtpTransport({

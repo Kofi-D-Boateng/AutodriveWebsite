@@ -1,5 +1,4 @@
 "use strict";
-
 // DEPENDENCIES
 require("dotenv").config();
 const express = require("express");
@@ -8,14 +7,12 @@ const passport = require("passport");
 const path = require("path");
 const ejs = require("ejs");
 const logger = require("morgan");
-
-var createError = require("http-errors");
-var cookieParser = require("cookie-parser");
+const createError = require("http-errors");
+const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const favicon = require("serve-favicon");
 
 // ROUTES REQUIRED
-
 const main = require("./routes/main.js");
 const about = require("./routes/about.js");
 const contact = require("./routes/contact.js");
@@ -64,7 +61,6 @@ require("./config/database.js");
 require("./config/passport.js");
 
 // ROUTES
-
 app.use("/", main);
 app.use("/about", about);
 app.use("/contact", contact);
