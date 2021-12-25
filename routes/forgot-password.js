@@ -40,7 +40,7 @@ router.post("/validation", tokenAbuseLimiter, async (req, res) => {
   } else {
     const JWT_SECRET = process.env.JWT_SECRET;
     const buffer = crypto.randomBytes(64).toString("hex");
-    const secret = JWT_SECRET + buffer;
+    const secret = JWT_SECRET;
     const payload = {
       email: query["email"],
       id: query["username"],
