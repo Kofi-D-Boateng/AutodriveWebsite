@@ -22,18 +22,12 @@ p {
     text-align: center;
     list-style: none;
   }
-  .user-bio {
-    display: none;
-  }
+  .user-bio,
   .user-banner hr {
     display: none;
   }
-  .user-image {
-    margin: 0 0 10% 0;
-  }
-  #CEO-Image {
-    margin: 0 0 10% 0;
-  }
+  .user-image,
+  #CEO-Image,
   .profile-edit-button {
     margin: 0 0 10% 0;
   }
@@ -41,10 +35,6 @@ p {
     max-width: 43%;
   }
 }
-
-// button {
-//   width: map-get($map: $button, $key: "full");
-// }
 
 // SCOPED CSS
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -68,9 +58,6 @@ p {
   #main-div-one {
     background-position: center;
   }
-  .ad-security__info {
-    text-align: center;
-  }
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -85,7 +72,8 @@ p {
 .ad-development__info {
   color: white;
 }
-.ad-development__info h1 {
+.ad-development__info h1,
+.ad-development__title h1 {
   font-weight: map-get($map: $font-weights, $key: "bold");
   color: white;
 }
@@ -93,10 +81,6 @@ p {
 @media screen and (max-width: 767px) {
   .ad-development {
     background-position: center;
-    text-align: center;
-  }
-  .ad-development__title h1 {
-    font-weight: map-get($map: $font-weights, $key: "bold");
   }
 }
 
@@ -144,7 +128,9 @@ p {
     display: none;
   }
 }
-////////////////////////////////////////////////////////////////////////////////////////
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
 /* LOG IN PAGE */
 #main-bg {
   text-align: center;
@@ -165,6 +151,16 @@ input {
 
 .forgot-pwd {
   margin-top: 15px;
+}
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* SIGN UP PAGE */
+
+.signUp-card {
+  text-align: center;
+  margin: 10% auto 0 auto;
+  max-width: 70%;
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -209,14 +205,9 @@ input {
   margin-left: 20px;
   margin-right: 20px;
 }
+
 #Employee-Image {
   max-width: 50%;
-}
-
-@media screen and (max-width: 765px) {
-  .ad-about {
-    text-align: center;
-  }
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -269,11 +260,8 @@ input {
   margin: 30px 0 0 0;
 }
 
+.ml-row,
 .cysa h1 {
-  text-align: center;
-}
-
-.ml-row {
   text-align: center;
 }
 
@@ -281,7 +269,6 @@ input {
 
 /* Web Development */
 .web-dev {
-  /* background-color:#528BC6; */
   padding-top: 50px;
   padding-bottom: 50px;
 }
@@ -310,11 +297,8 @@ input {
   margin-top: 200px;
 }
 
+.be-title,
 .be-btn {
-  text-align: left;
-}
-
-.be-title {
   text-align: left;
 }
 
@@ -353,3 +337,11 @@ input {
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 /* footer */
+@media screen and (max-width: 600px) {
+  footer {
+    display: none;
+  }
+  .ad-analytics__contain {
+    padding-bottom: 0;
+  }
+}

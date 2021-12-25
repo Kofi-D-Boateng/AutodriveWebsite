@@ -30,8 +30,8 @@ router.post("/purchased", accountPurchaseLimiter, async (req, res) => {
       service: "gmail",
       host: "smtp.gmail.com",
       auth: {
-        user: process.env.PURCHASE_EMAIL,
-        pass: process.env.TEAM_EMAIL_CREDENTIALS,
+        user: `${process.env.PURCHASE_EMAIL}`,
+        pass: `${process.env.TEAM_EMAIL_CREDENTIALS}`,
       },
     })
   );
@@ -56,7 +56,7 @@ router.post("/purchased", accountPurchaseLimiter, async (req, res) => {
             // RECEIPT
             try {
               var mailOptions = {
-                from: "no-reply",
+                from: `${process.env.PURCHASE_EMAIL}`,
                 to: `${req.user.email}`,
                 subject: `Thank you for purchasing through Autodrive!`,
                 text: `Thank you ${newPurchase.name} for ordering through Autodrive! 

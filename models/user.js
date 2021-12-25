@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema(
     phone: { type: String, trim: true, validate: /^\d{10}$/ },
     userimage: { type: String, default: "c2d993a9788cf64656ec07b7079177ea" },
     googleId: String,
+    resetlink: { type: String, default: "" },
   },
   { timestamps: true }
 );

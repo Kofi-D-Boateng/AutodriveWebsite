@@ -3,7 +3,7 @@ const express = require("express");
 var router = express.Router();
 const User = require("../models/user");
 require("passport");
-const {
+var {
   Parser,
   transforms: { unwind },
 } = require("json2csv");
@@ -164,38 +164,39 @@ router.post("/update", accountAbuseLimiter, async (req, res) => {
   }
 });
 
-// THIS NEEDS TO BE FIXED////////
+// THIS STILL NEEDS TO BE FIXED////////
 // DOWNLOADING CSV OF PURCHASES
-router.get("/purchased-items/:id", csvAbuseLimiter, (req, res) => {
+router.get("/purchased-items/:username", csvAbuseLimiter, async (req, res) => {
   if (req.isAuthenticated()) {
-    User.findOne({ id: req.params.id }, (err, foundUser) => {
-      if (foundUser) {
-        const userPurchases = foundUser.purchases;
-        const fields = ["name", "order", "duration", "asset"];
-        const json2cvsParser = new Parser({ fields });
-        try {
-          const csv = json2cvsParser.parse(userPurchases);
-          res.attachment(`${req.user.username}-purchases.csv`);
-          res.status(200).send(csv);
-          req.flash("success", "successful download");
-        } catch (error) {
-          console.log("error:", error.message);
-          res.status(500).send(error.message);
-        }
+    let foundUser = await User.findOne({ id: req.params.username });
+    if (foundUser) {
+      console.log(foundUser);
+      const userPurchases = foundUser.purchases;
+      const fields = ["name", "order", "duration", "asset"];
+      const json2cvsParser = new Parser({ fields });
+      try {
+        const csv = json2cvsParser.parse(userPurchases);
+        res.attachment(`${req.user.username}-purchases.csv`);
+        res.status(200).send(csv);
+        req.flash("success", "successful download");
+      } catch (error) {
+        console.log("error:", error.message);
+        res.status(500).send(error.message);
       }
-    });
+    }
   }
 });
 
 // REMOVING ACCOUNT FROM DATABASE
-router.post("/account/delete", deleteAbuseLimiter, (req, res) => {
+router.post("/account/delete", deleteAbuseLimiter, async (req, res) => {
   if (req.isAuthenticated()) {
-    console.log(req);
     let checkedBox = req.body.destroy;
     if (checkedBox === "on") {
-      User.findOneAndRemove({ username: req.user.username })
+      await User.findOneAndDelete({
+        username: req.user.username,
+      })
         .then(
-          req.flash("deletion", "Your account was deleted"),
+          req.flash("success", "Your account was deleted"),
           req.destroy(),
           req.logout(),
           res.redirect("/")

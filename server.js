@@ -22,6 +22,7 @@ const help = require("./routes/help.js");
 const login = require("./routes/login.js");
 const signup = require("./routes/signup.js");
 const forgot_password = require("./routes/forgot-password.js");
+const reset_password = require("./routes/reset-password.js");
 
 // PORT
 const port = 3000;
@@ -40,7 +41,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/public", express.static("public"));
 app.use(flash());
-app.use((err, req, res, next) => {});
 
 // COOKIES AND SESSION
 app.use(
@@ -64,19 +64,17 @@ require("./config/passport.js");
 app.use("/", main);
 app.use("/about", about);
 app.use("/contact", contact);
-// PRICING
 app.use("/pricing", pricing);
-// PROFILE
 app.use("/profile", profile);
 app.use("/help", help);
 app.use("/login", login);
 app.use("/signup", signup);
 app.use("/forgot-password", forgot_password);
-
+app.use("/reset-password", reset_password);
 // Logout
-app.get("/logout", function (req, res) {
+app.get("/logout", async (req, res) => {
   res.clearCookie("connect.sid");
-  req.flash("success", "Successfully logged out");
+  req.logout();
   res.redirect("/");
 });
 

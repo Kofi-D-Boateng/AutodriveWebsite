@@ -3,6 +3,7 @@ var express = require("express");
 var router = express.Router();
 const passport = require("passport");
 const rateLimiter = require("express-rate-limit");
+let user = require("../models/user");
 
 // Rate-limiting ruleset
 const loginAccountLimiter = rateLimiter({
@@ -11,7 +12,7 @@ const loginAccountLimiter = rateLimiter({
   message: "Too many login attempts. Please try again later.",
 });
 
-router.route("/").get(function (req, res) {
+router.get("/", (req, res) => {
   let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
   let navbar = "partials/navbar.ejs";
   const errors = req.flash().error || [];

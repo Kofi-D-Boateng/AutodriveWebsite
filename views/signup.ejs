@@ -11,8 +11,8 @@
     <%}%>
     <div class="container mt-5">
       <div class="row">
-        <div class="col-sm-12">
-          <div class="card border border-2">
+        <div class="">
+          <div class="card signUp-card border border-2">
             <div class="card-header">
               <h1 class="h4">Register</h1>
             </div>
@@ -78,13 +78,15 @@
                     required
                   />
                 </div>
-                <button type="submit" class="btn btn-dark">signup</button>
+                <button type="submit" class="btn btn-outline-dark text-center">
+                  signup
+                </button>
               </form>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %>
+    <%- include("partials/scripts.ejs") %>
   </body>
 </html>

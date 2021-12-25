@@ -29,6 +29,7 @@ router.post("/auth", createAccountLimiter, (req, res) => {
       let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
       if (!err && user) {
         passport.authenticate("local")(req, res, function () {
+          req.flash("success", "Your account was created!");
           res.redirect("/");
         });
       } else {
