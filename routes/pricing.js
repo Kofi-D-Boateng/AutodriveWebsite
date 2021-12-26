@@ -45,6 +45,7 @@ router.post("/purchased", accountPurchaseLimiter, async (req, res) => {
       duration: req.body.duration,
       asset: req.body.asset,
       name: req.body.fullName,
+      email: req.body.email,
       timestamp: req.user.updatedAt,
     };
     console.log(newPurchase);
@@ -57,7 +58,7 @@ router.post("/purchased", accountPurchaseLimiter, async (req, res) => {
             try {
               var mailOptions = {
                 from: `${process.env.PURCHASE_EMAIL}`,
-                to: `${req.user.email}`,
+                to: `${newPurchase.email}`,
                 subject: `Thank you for purchasing through Autodrive!`,
                 text: `Thank you ${newPurchase.name} for ordering through Autodrive! 
               Your order of ${newPurchase.order} for ${newPurchase.duration} on ${newPurchase.timestamp} was processed. 

@@ -34,14 +34,15 @@ const csvAbuseLimiter = rateLimiter({
 });
 
 // GET THE ACCOUNT
-router.get("/", function (req, res) {
+router.get("/", async (req, res) => {
   console.log("THE ROUTE WAS FINALLY HIT \n");
   const error = req.flash().error || [];
   if (req.isAuthenticated()) {
     // QUERY FOR ORDERS
     let id = req.user.id;
-    User.findById(id, (err, foundUser) => {
+    User.findById(id, async (err, foundUser) => {
       if (foundUser) {
+        console.log(foundUser);
         let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
         let dateObj = req.user.createdAt;
         let createdDate = dateObj.toString().slice(4, 16);
@@ -113,51 +114,54 @@ router.post("/update", accountAbuseLimiter, async (req, res) => {
   try {
     console.log("MADE IT INSIDE THE TRY ROUTE \n");
     if (req.isAuthenticated()) {
-      await User.findOne({ username: req.user.username }, (err, foundUser) => {
-        if (foundUser) {
-          console.log(
-            "FOUND USER \n" + foundUser + "\n" + req.params.id + "\n"
-          );
-          const newUpdate = {
-            username: req.body.username,
-            company: req.body.company,
-            location: req.body.location,
-            position: req.body.position,
-          };
-          if (!newUpdate) {
-            req.flash("error", "There is no input to update");
-            res.redirect("/profile");
-            return;
-          } else {
-            while (newUpdate) {
-              if (
-                newUpdate.username.trim().length >= 3 &&
-                newUpdate.username !== User.find({ username: { $ne: null } })
-              ) {
-                foundUser.username = newUpdate["username"];
-              }
-              if (newUpdate.company.trim().length >= 3) {
-                foundUser.company = newUpdate["company"];
-              }
-              if (newUpdate.location.trim().length >= 3) {
-                foundUser.location = newUpdate["location"];
-              }
-              if (newUpdate.position.trim().length >= 3) {
-                foundUser.position = newUpdate["position"];
-              }
-              foundUser.save((err) => {
-                if (err) {
-                  console.log(err);
+      await User.findOne(
+        { username: req.user.username } || { googleId: req.user.googleId },
+        (err, foundUser) => {
+          if (foundUser) {
+            console.log(
+              "FOUND USER \n" + foundUser + "\n" + req.params.id + "\n"
+            );
+            const newUpdate = {
+              username: req.body.username,
+              company: req.body.company,
+              location: req.body.location,
+              position: req.body.position,
+            };
+            if (!newUpdate) {
+              req.flash("error", "There is no input to update");
+              res.redirect("/profile");
+              return;
+            } else {
+              while (newUpdate) {
+                if (
+                  newUpdate.username.trim().length >= 3 &&
+                  newUpdate.username !== User.find({ username: { $ne: null } })
+                ) {
+                  foundUser.username = newUpdate["username"];
                 }
-              });
-              break;
+                if (newUpdate.company.trim().length >= 3) {
+                  foundUser.company = newUpdate["company"];
+                }
+                if (newUpdate.location.trim().length >= 3) {
+                  foundUser.location = newUpdate["location"];
+                }
+                if (newUpdate.position.trim().length >= 3) {
+                  foundUser.position = newUpdate["position"];
+                }
+                foundUser.save((err) => {
+                  if (err) {
+                    console.log(err);
+                  }
+                });
+                break;
+              }
             }
+            res.redirect("/profile");
+          } else {
+            console.log("FOUND THE ANSWER" + err + "\n");
           }
-          res.redirect("/profile");
-        } else {
-          console.log("FOUND THE ANSWER" + err + "\n");
         }
-      });
+      );
     }
   } catch (error) {
     console.log("THERE WAS AN ERROR(caught): " + error + "\n");
@@ -192,9 +196,11 @@ router.post("/account/delete", deleteAbuseLimiter, async (req, res) => {
   if (req.isAuthenticated()) {
     let checkedBox = req.body.destroy;
     if (checkedBox === "on") {
-      await User.findOneAndDelete({
-        username: req.user.username,
-      })
+      await User.findOneAndDelete(
+        {
+          username: req.user.username,
+        } || { googleId: req.user.googleId }
+      )
         .then(
           req.flash("success", "Your account was deleted"),
           req.destroy(),

@@ -3,7 +3,9 @@ var express = require("express");
 var router = express.Router();
 const passport = require("passport");
 const rateLimiter = require("express-rate-limit");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 let user = require("../models/user");
+const { application } = require("express");
 
 // Rate-limiting ruleset
 const loginAccountLimiter = rateLimiter({
@@ -33,6 +35,21 @@ router.post(
     failureRedirect: "/login",
     failureFlash: { type: "error", message: "Invalid username or password" },
   })
+);
+
+// GOOGLE OAUTH
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect("/");
+  }
 );
 
 module.exports = router;
