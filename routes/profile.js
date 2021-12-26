@@ -166,16 +166,16 @@ router.post("/update", accountAbuseLimiter, async (req, res) => {
 
 // THIS STILL NEEDS TO BE FIXED////////
 // DOWNLOADING CSV OF PURCHASES
-router.get("/purchased-items/:username", csvAbuseLimiter, async (req, res) => {
+router.post("/purchased-items/", csvAbuseLimiter, async (req, res) => {
   if (req.isAuthenticated()) {
-    let foundUser = await User.findOne({ id: req.params.username });
+    let foundUser = await User.findOne({ username: req.user.username });
     if (foundUser) {
       console.log(foundUser);
       const userPurchases = foundUser.purchases;
       const fields = ["name", "order", "duration", "asset"];
       const json2cvsParser = new Parser({ fields });
       try {
-        const csv = json2cvsParser.parse(userPurchases);
+        const csv = await json2cvsParser.parse(userPurchases);
         res.attachment(`${req.user.username}-purchases.csv`);
         res.status(200).send(csv);
         req.flash("success", "successful download");

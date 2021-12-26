@@ -6,39 +6,19 @@
   <body>
     <header><%- include(navbar) %></header>
     <%for(let i=0; i < success.length; i++){ %>
-    <div class="container invalidAlert py-4 text-center">
+    <div class="container invalidAlert py-4 text-center" id="hideMe">
       <div class="alert alert-success" role="alert"><%=success[i]%></div>
     </div>
     <%}%>
     <section class="container-fluid mt-5 pt-5 mb-5 pb-5">
-      <div class="container-lg">
+      <div class="container-lg text-center">
         <div class="company-banner">
-          <div class="row">
-            <div class="col-sm-8">
-              <div class="col-sm-6 company-title text-center">
-                <h1>AUTODRIVE</h1>
-              </div>
-              <div class="col-sm-6 company-slogan text-center">
-                <p class="fs-5">Pushing business innovation forward.</p>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="banner-statement">
-                <div class="sneak-peek-title">
-                  <p class="fs-5">
-                    Get a sneak peek of the new features we are working on!
-                  </p>
-                </div>
-                <div class="sneak-peek-button">
-                  <a role="button" class="btn btn-dark" href="#"
-                    >Check it out</a
-                  >
-                </div>
-              </div>
-            </div>
+          <div class="col-sm-12 company-slogan text-center">
+            <p class="fs-1">
+              Find the right solutions for your business needs.
+            </p>
           </div>
         </div>
-        <div></div>
       </div>
     </section>
 
@@ -57,9 +37,7 @@
                   <p class="fs-4">
                     Securing your assets with our help just got easier.
                   </p>
-                  <a href="/cyber-security" class="btn btn-light"
-                    >Cyber Security</a
-                  >
+                  <a href="/cyber-security" class="btn btn-light">Learn more</a>
                 </div>
               </div>
             </div>
@@ -83,7 +61,7 @@
                   your needs.
                 </p>
                 <a href="/development" class="btn btn-light" type="button"
-                  >Development</a
+                  >Learn more</a
                 >
               </div>
             </div>
@@ -112,7 +90,7 @@
                 class="btn btn-outline-light btn-sm"
                 href="/machine-learning"
                 role="button"
-                >Get Started</a
+                >Learn more</a
               >
             </div>
           </div>

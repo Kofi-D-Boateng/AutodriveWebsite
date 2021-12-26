@@ -16,6 +16,10 @@ $button: (
 p {
   font-size: 1.3rem;
 }
+img {
+  width: 100%;
+  height: auto;
+}
 
 @media screen and (max-width: 767px) {
   * {
@@ -34,11 +38,53 @@ p {
   .profile-edit-button a {
     max-width: 43%;
   }
+  img {
+    width: 80%;
+    height: auto;
+  }
+}
+
+// ALL OF THE FLAGS
+#hideMe {
+  -webkit-animation: cssAnimation 5s forwards;
+  animation: cssAnimation 5s forwards;
+}
+@keyframes cssAnimation {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes cssAnimation {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 // SCOPED CSS
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 /*GRID SYSTEM*/
+
+/* Banner */
+
+.sneak-peak-banner {
+  margin: 20% 0 0 0;
+}
+.sneak-peak-banner img {
+  max-width: 100%;
+}
+
 #main-div-one {
   background-image: url("/public/photos/security-camera.jpg");
   background-repeat: no-repeat;
@@ -338,7 +384,10 @@ input {
 
 /* footer */
 @media screen and (max-width: 600px) {
-  footer {
+  #social-col,
+  #product-col,
+  #contact-col,
+  #copyright {
     display: none;
   }
   .ad-analytics__contain {

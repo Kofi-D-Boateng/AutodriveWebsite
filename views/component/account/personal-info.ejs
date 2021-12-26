@@ -1,7 +1,11 @@
 <div class="col-md-6 account-items">
   <div class="user-banner">
     <div class="user-image">
-      <label for="imageInput" title="Change profile picture">
+      <label
+        for="imageInput"
+        title="Change profile picture"
+        id="pfp-link-label"
+      >
         <img src="/profile/<%=userPFP%>" id="profile-image" alt="img.png" />
       </label>
       <form
@@ -32,7 +36,7 @@
       <div class="collapse mt-4" id="collapseEditForm">
         <form
           class="updateForm"
-          onsubmit="formValidation()"
+          onsubmit="return false"
           action="/profile/update"
           method="post"
         >

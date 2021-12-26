@@ -3,18 +3,18 @@
   <head>
     <%- include("partials/head.ejs") %>
   </head>
-  <body>
+  <body class="bg-light">
     <%- include(navbar) %>
 
-    <section class="container-fluid bg-light pb-5 pt-5">
+    <section class="container-fluid pb-5 pt-5 text-center">
       <div class="container-lg">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <h1 class="h2 fw-normal">Machine Learning</h1>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <p>Leverage your personal data to get ahead of the competition.</p>
           </div>
         </div>
@@ -53,16 +53,40 @@
                   <li>Company margins</li>
                   <li>Company expenditures</li>
                 </ul>
-                <div class="col-4 text-left">
-                  <a role="button" href="/pricing" class="btn btn-danger btn-sm"
-                    >Get Autodrive Analytics</a
+                <div class="dropdown analytic-btn">
+                  <a
+                    class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                    href="#"
+                    role="button"
+                    id="dropdownMenuLink"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
+                    What we use
+                  </a>
+                  <ul
+                    class="dropdown-menu bg-light"
+                    style="color: black"
+                    aria-labelledby="dropdownMenuLink"
+                  >
+                    <li class="text-center">Linear Regression models</li>
+                    <li class="text-center">Logical Regression models</li>
+                    <li class="text-center">Support Vectors models</li>
+                    <li class="text-center">And more!</li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="row mt-5 pb-5 pt-5">
+          <div class="col-md-6">
+            <img
+              style="width: 100%"
+              src="public/photos/analytics.jpg"
+              alt="analytics.png"
+            />
+          </div>
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-12">
@@ -84,24 +108,31 @@
                     <li>Unsupervised Learning</li>
                     <li>Neural Networks</li>
                   </ul>
-                  <div class="mb-5 col-3 text-left">
+                  <div class="dropdown analytic-btn">
                     <a
+                      class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                      href="#"
                       role="button"
-                      href="/pricing"
-                      class="btn btn-danger btn-sm"
-                      >Get machine learning</a
+                      id="dropdownMenuLink"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
                     >
+                      What we use
+                    </a>
+                    <ul
+                      class="dropdown-menu bg-light"
+                      style="color: black"
+                      aria-labelledby="dropdownMenuLink"
+                    >
+                      <li class="text-center">TensorFlow</li>
+                      <li class="text-center">Keras</li>
+                      <li class="text-center">Pytorch</li>
+                      <li class="text-center">And more!</li>
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-6">
-            <img
-              style="width: 100%"
-              src="public/photos/analytics.jpg"
-              alt="analytics.png"
-            />
           </div>
         </div>
       </div>
