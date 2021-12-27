@@ -19,6 +19,8 @@ const profile_index = (req, res) => {
         let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
         let dateObj = req.user.createdAt;
         let createdDate = dateObj.toString().slice(4, 16);
+        const error = req.flash().error || [];
+
         res.render("profile", {
           error,
           currentUser: req.user.username,
@@ -88,6 +90,7 @@ const profile_profile_update = async (req, res) => {
               } else {
                 req.flash("error", "username is taken");
                 res.redirect("/profile");
+                return;
               }
               if (newUpdate.company.trim().length >= 3) {
                 foundUser.company = newUpdate["company"];
@@ -105,6 +108,7 @@ const profile_profile_update = async (req, res) => {
               });
               break;
             }
+            req.flash("error", "username is taken");
             res.redirect("/profile");
           } else {
             res.redirect("/");
@@ -148,10 +152,7 @@ const profile_deletion = async (req, res) => {
           req.logout(),
           res.redirect("/")
         )
-        .catch(
-          (err) => req.flash("error", "Something went wrong"),
-          res.redirect("/")
-        );
+        .catch((err) => req.flash("error", "Something went wrong"));
     }
   }
 };

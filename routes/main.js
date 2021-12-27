@@ -6,11 +6,13 @@ router.get("/", (req, res) => {
   let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
   let navbar = "partials/navbar.ejs";
   const success = req.flash().success || [];
-  const deletion = req.flash().deletion || [];
   if (req.isAuthenticated()) {
-    res.render("../views/home", { navbar: navbarLoggedIn, success, deletion });
+    res.render("../views/home", {
+      navbar: navbarLoggedIn,
+      success,
+    });
   } else {
-    res.render("../views/home", { navbar: navbar, success, deletion });
+    res.render("../views/home", { navbar: navbar, success });
   }
 });
 router.get("/development", (req, res) => {
