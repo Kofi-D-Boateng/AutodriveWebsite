@@ -34,8 +34,6 @@ module.exports = {
       Key: fileKey,
       Bucket: bucketName,
     };
-    console.log("GRAB THIS KEY---> " + downloadParams["Key"] + "\n");
-
     return s3.getObject(downloadParams).createReadStream();
   }),
 };

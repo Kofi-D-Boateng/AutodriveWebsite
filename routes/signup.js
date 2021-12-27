@@ -1,8 +1,7 @@
 var express = require("express");
 var router = express.Router();
-const passport = require("passport");
-var User = require("../models/user");
 const rateLimiter = require("express-rate-limit");
+const signupController = require("../controllers/signupController");
 
 // Rate-limiting ruleset
 const createAccountLimiter = rateLimiter({
@@ -11,32 +10,6 @@ const createAccountLimiter = rateLimiter({
   message: "Too many account sign up attempts. Please try again later.",
 });
 
-router.get("/", function (req, res) {
-  const signupErrors = req.flash().error || [];
-  res.render("signup", { signupErrors });
-});
-router.post("/auth", createAccountLimiter, (req, res) => {
-  User.register(
-    {
-      username: req.body.username,
-      email: req.body.email,
-      company: req.body.company,
-      location: req.body.location,
-      position: req.body.position,
-    },
-    req.body.password,
-    function (err, user) {
-      let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
-      if (!err && user) {
-        passport.authenticate("local")(req, res, function () {
-          req.flash("success", "Your account was created!");
-          res.redirect("/");
-        });
-      } else {
-        req.flash("error", "Username or email has already been taken");
-        res.redirect("/signup");
-      }
-    }
-  );
-});
+router.get("/", signupController.signup_index);
+router.post("/auth", createAccountLimiter, signupController.signup_validation);
 module.exports = router;

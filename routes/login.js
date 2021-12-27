@@ -1,11 +1,9 @@
 "use strict";
 var express = require("express");
 var router = express.Router();
-const passport = require("passport");
 const rateLimiter = require("express-rate-limit");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-let user = require("../models/user");
-const { application } = require("express");
+const passport = require("passport");
+const loginController = require("../controllers/loginController");
 
 // Rate-limiting ruleset
 const loginAccountLimiter = rateLimiter({
@@ -14,16 +12,7 @@ const loginAccountLimiter = rateLimiter({
   message: "Too many login attempts. Please try again later.",
 });
 
-router.get("/", (req, res) => {
-  let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
-  let navbar = "partials/navbar.ejs";
-  const errors = req.flash().error || [];
-  if (req.isAuthenticated()) {
-    res.render("login", { navbar: navbarLoggedIn });
-  } else {
-    res.render("login", { navbar: navbar, errors });
-  }
-});
+router.get("/", loginController.login_index);
 router.post(
   "/auth",
   loginAccountLimiter,
@@ -46,10 +35,7 @@ router.get(
 router.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect("/");
-  }
+  loginController.google_login_auth
 );
 
 module.exports = router;
