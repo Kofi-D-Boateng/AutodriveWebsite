@@ -25,8 +25,6 @@ module.exports = {
       Body: fileStream,
       Key: file.filename,
     };
-    // console.log("GRAB THIS KEY---> " + uploadParams["Key"] + "\n");
-
     return s3.upload(uploadParams).promise();
   }),
   getFileStream: (getFileStream = (fileKey) => {
