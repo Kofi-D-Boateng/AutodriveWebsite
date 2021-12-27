@@ -145,7 +145,11 @@ img {
   color: white;
   font-size: 1.4rem;
   font: bold;
-  text-decoration: none;
+}
+
+.ad-analytics__info a:hover {
+  color: black;
+  cursor: pointer;
 }
 
 .ad-analytics__info h3 {
@@ -361,8 +365,6 @@ input {
 
 #profile-image:hover {
   cursor: pointer;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */

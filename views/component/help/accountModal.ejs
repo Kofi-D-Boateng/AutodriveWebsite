@@ -1,0 +1,50 @@
+<div class="card bg-light border-dark">
+  <div class="card-body">
+    <h5 class="card-title">Help With Account</h5>
+    <p class="card-text">
+      We have the answers you are looking for in regards to account!
+    </p>
+    <button
+      type="button"
+      class="btn btn-outline-success col-4"
+      data-bs-toggle="modal"
+      data-bs-target="#accountModal"
+    >
+      Get help
+    </button>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="accountModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Accounts FAQ</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <%- include("./accountHelp.ejs")%>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
