@@ -1,6 +1,6 @@
 const User = require("../models/user");
 require("passport");
-const { uploadFile, getFileStream } = require("../routes/s3");
+const { uploadFile, getFileStream, deleteFile } = require("../routes/s3");
 const util = require("util");
 const fs = require("fs");
 const unLinkFile = util.promisify(fs.unlink);
@@ -141,6 +141,11 @@ const profile_deletion = async (req, res) => {
   if (req.isAuthenticated()) {
     let checkedBox = req.body.destroy;
     if (checkedBox === "on") {
+      let query = await User.findOne({username: req.user.username})
+      const key = await query.userimage
+      if(key !== "c2d993a9788cf64656ec07b7079177ea"){
+        await deleteFile(key)
+      }
       await User.findOneAndDelete(
         {
           username: req.user.username,
@@ -152,7 +157,10 @@ const profile_deletion = async (req, res) => {
           req.logout(),
           res.redirect("/")
         )
-        .catch((err) => req.flash("error", "Something went wrong"));
+    }else{
+      req.flash("error", "Account was not deleted. Please check the box.")
+      req.destroy()
+      res.redirect("/")
     }
   }
 };

@@ -5,14 +5,15 @@ const User = require("../models/user");
 const reset_password_index = async (req, res) => {
   const { token } = req.params;
   if (!token) {
-    console.log("restlink either does not exist or is expired");
+    req.flash("error", "The link you clicked on is invalid.")
+    res.redirect("/")
     return;
   } else {
     jwt.verify(token, process.env.JWT_SECRET, (err, decodedData) => {
       if (!err) {
-        console.log(decodedData);
+        let verifiedUser = decodedData.id
         const error = req.flash().error || [];
-        res.render("reset-password", { token, error });
+        res.render("reset-password", { token, error, username:verifiedUser });
       } else {
         res.send(
           "There was an error with the link. Please request another one."
@@ -24,7 +25,7 @@ const reset_password_index = async (req, res) => {
 
 const reset_password_validation = async (req, res) => {
   const { username, newPassword, confirmedPassword } = req.body;
-  let query = await User.findOne({ username: username });
+  let query = await User.findOne({ username: username })
   // CHECK FOR USERNAME SPRAY & MISMATCH PASSWORD
   jwt.verify(query.resetlink, process.env.JWT_SECRET, async (err) => {
     if (err) {

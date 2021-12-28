@@ -16,7 +16,7 @@ const rollbackLimiter = rateLimiter({
 router.get("/:token", resetPasswordController.reset_password_index);
 
 router.post(
-  `/validation`,
+  "/changed-password/validation",
   rollbackLimiter,
   resetPasswordController.reset_password_validation
 );

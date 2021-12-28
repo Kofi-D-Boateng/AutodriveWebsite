@@ -28,13 +28,12 @@ const forgot_password_validation = async (req, res) => {
     res.redirect("/forgot-password");
   } else {
     const JWT_SECRET = process.env.JWT_SECRET;
-    const buffer = crypto.randomBytes(64).toString("hex");
     const secret = JWT_SECRET;
     const payload = {
-      email: query["email"],
-      id: query["username"],
+      email: query.email,
+      id: query.username,
     };
-    const token = jwt.sign(payload, secret, { expiresIn: "15m" });
+    const token = jwt.sign(payload, secret, { expiresIn: "5m" });
     query.updateOne({ resetlink: token }, (err) => {
       if (err) {
         req.flash("error", err);

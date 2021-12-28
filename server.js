@@ -45,9 +45,9 @@ app.use(flash());
 // COOKIES AND SESSION
 app.use(
   session({
-    secret: "thisisastring",
+    secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
 
@@ -73,6 +73,7 @@ app.use("/forgot-password", forgot_password);
 app.use("/reset-password", reset_password);
 // Logout
 app.get("/logout", async (req, res) => {
+  req.flash("success", "You are logged out")
   res.clearCookie("connect.sid");
   req.logout();
   res.redirect("/");

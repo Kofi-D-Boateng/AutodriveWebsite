@@ -1,5 +1,11 @@
-$("#newPassword, #confirmedPassword").on("keyup", function () {
-  if ($("#newPassword").val() == $("#confirmedPassword").val()) {
-    $("#confirmedPassword").css("border-color", "green");
-  } else $("#confirmedPassword").css("border-color", "red");
-});
+if (
+  $("#username").val().length < 3 &&
+  $("#company").val().length < 3 &&
+  $("#position").val().length < 3 &&
+  $("#location").val().length < 3
+) {
+  $(".updateForm").submit((e) => {
+    e.preventDefault();
+    return false;
+  });
+}
