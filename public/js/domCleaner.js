@@ -1,3 +1,3 @@
 setTimeout(() => {
-  $("#hideMe").remove();
+  $("#hideMe").hide();
 }, 4800);

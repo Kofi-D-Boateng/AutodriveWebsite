@@ -7,7 +7,9 @@
     <header><%- include(navbar) %></header>
     <%for(let i=0; i < success.length; i++){ %>
     <div class="container invalidAlert py-4 text-center" id="hideMe">
-      <div class="alert alert-success" role="alert"><%=success[i]%></div>
+      <div class="alert alert-success box-shadow" role="alert">
+        <%=success[i]%>
+      </div>
     </div>
     <%}%>
     <section class="container-fluid mt-5 pt-5 mb-5 pb-5">

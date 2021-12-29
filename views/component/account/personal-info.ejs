@@ -34,11 +34,7 @@
         >Edit your profile</a
       >
       <div class="collapse mt-4" id="collapseEditForm">
-        <form
-          class="updateForm"
-          action="/profile/update"
-          method="post"
-        >
+        <form class="updateForm" action="/profile/update" method="post">
           <div class="d-grid mb-2">
             <input
               class="form-control form-control-sm"
@@ -75,7 +71,11 @@
               placeholder="Position"
             />
           </div>
-          <button class="btn btn-success btn-sm col-12"  type="submit">
+          <button
+            class="btn btn-success btn-sm col-12"
+            id="submitButton"
+            type="submit"
+          >
             Save
           </button>
         </form>

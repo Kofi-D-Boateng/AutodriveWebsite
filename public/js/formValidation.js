@@ -1,11 +1,12 @@
-if (
-  $("#username").val().length < 3 &&
-  $("#company").val().length < 3 &&
-  $("#position").val().length < 3 &&
-  $("#location").val().length < 3
-) {
-  $(".updateForm").submit((e) => {
-    e.preventDefault();
+$("#submitButton").on("click", () => {
+  if (
+    $("#username").val().length == "" &&
+    $("#company").val().length == "" &&
+    $("#position").val().length == "" &&
+    $("#location").val().length == ""
+  ) {
     return false;
-  });
-}
+  } else {
+    return true;
+  }
+});
