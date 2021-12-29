@@ -29,28 +29,35 @@ const reset_password_validation = async (req, res) => {
   const { username, newPassword, confirmedPassword } = req.body;
   let query = await User.findOne({ username: username });
   // CHECK FOR USERNAME SPRAY & MISMATCH PASSWORD
-  jwt.verify(query.resetlink, process.env.JWT_SECRET, async (err) => {
-    if (err) {
-      req.flash("error", err);
-      res.redirect(`/reset-password/${query.resetlink}`);
-    } else if (newPassword !== confirmedPassword) {
-      req.flash("error", "PASSWORDS DO NOT MATCH");
-      res.redirect(`/reset-password/${query.resetlink}`);
-    } else {
-      try {
-        let savedUser = await query.setPassword(newPassword);
-        await savedUser.save();
-        req.flash("success", "Password was successfully changed. Please login");
-        res.redirect("/login");
-      } catch (error) {
-        req.flash(
-          "error",
-          "There was an error updating your password please try again."
-        );
+  jwt.verify(
+    query.resetlink,
+    "ZaLReWHDTMOxq7VGrDFCysCWf3WmlkiR4lRWc1bGCvgPkfzJJVYswbM7Dkn0vmEajhLPbxLuByDAgPc/2uQlQ==",
+    async (err) => {
+      if (err) {
+        req.flash("error", err);
         res.redirect(`/reset-password/${query.resetlink}`);
+      } else if (newPassword !== confirmedPassword) {
+        req.flash("error", "PASSWORDS DO NOT MATCH");
+        res.redirect(`/reset-password/${query.resetlink}`);
+      } else {
+        try {
+          let savedUser = await query.setPassword(newPassword);
+          await savedUser.save();
+          req.flash(
+            "success",
+            "Password was successfully changed. Please login"
+          );
+          res.redirect("/login");
+        } catch (error) {
+          req.flash(
+            "error",
+            "There was an error updating your password please try again."
+          );
+          res.redirect(`/reset-password/${query.resetlink}`);
+        }
       }
     }
-  });
+  );
 };
 
 module.exports = {
