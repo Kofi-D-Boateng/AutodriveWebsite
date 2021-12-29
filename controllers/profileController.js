@@ -144,19 +144,22 @@ const profile_deletion = async (req, res) => {
       let query = await User.findOne({ username: req.user.username });
       const key = await query.userimage;
       if (key !== "c2d993a9788cf64656ec07b7079177ea") {
-        await deleteFile(key);
+        deleteFile(key);
       }
-      let deletedUser = await User.findOneAndDelete(
-        {
-          username: req.user.username,
-        } || { googleId: req.user.googleId }
+      User.findOneAndDelete(
+        { username: req.user.username } || { googleId: req.user.googleId },
+        (err) => {
+          if (!err) {
+            req.flash("success", "Your account was deleted"),
+              req.destroy(),
+              req.logout(),
+              res.redirect("/");
+          } else {
+            req.flash("error", "Profile was not deleted");
+            res.redirect("/profile");
+          }
+        }
       );
-      if (deletedUser) {
-        req.flash("success", "Your account was deleted"),
-          req.destroy(),
-          req.logout(),
-          res.redirect("/");
-      }
     } else {
       req.flash("error", "Account was not deleted. Please check the box.");
       req.destroy();
