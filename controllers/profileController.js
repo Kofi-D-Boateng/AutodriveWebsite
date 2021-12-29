@@ -146,16 +146,17 @@ const profile_deletion = async (req, res) => {
       if (key !== "c2d993a9788cf64656ec07b7079177ea") {
         await deleteFile(key);
       }
-      await User.findOneAndDelete(
+      let deletedUser = await User.findOneAndDelete(
         {
           username: req.user.username,
         } || { googleId: req.user.googleId }
-      ).then(
-        req.flash("success", "Your account was deleted"),
-        req.destroy(),
-        req.logout(),
-        res.redirect("/")
       );
+      if (deletedUser) {
+        req.flash("success", "Your account was deleted"),
+          req.destroy(),
+          req.logout(),
+          res.redirect("/");
+      }
     } else {
       req.flash("error", "Account was not deleted. Please check the box.");
       req.destroy();
