@@ -153,8 +153,8 @@ const profile_deletion = async (req, res) => {
       ).then(
         req.flash("success", "Your account was deleted"),
         req.destroy(),
-        req.logout()
-         res.redirect("/");
+        req.logout(),
+        res.redirect("/")
       );
     } else {
       req.flash("error", "Account was not deleted. Please check the box.");
