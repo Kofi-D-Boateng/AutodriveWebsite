@@ -45,7 +45,8 @@ app.use(flash());
 // COOKIES AND SESSION
 app.use(
   session({
-    secret: process.env.SECRET,
+    secret:
+      "cCbNXsMTf6R0mCpJf+PBBX8GpXCyQpPzQOu75lOwfR488r00hm2FBUUdue2gRWmC4eiArCup4+CI8DU8Lu6FFw==",
     resave: false,
     saveUninitialized: false,
   })
@@ -73,7 +74,7 @@ app.use("/forgot-password", forgot_password);
 app.use("/reset-password", reset_password);
 // Logout
 app.get("/logout", async (req, res) => {
-  req.flash("success", "You are logged out")
+  req.flash("success", "You are logged out");
   res.clearCookie("connect.sid");
   req.logout();
   res.redirect("/");

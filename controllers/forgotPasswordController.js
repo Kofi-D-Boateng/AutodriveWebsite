@@ -17,8 +17,8 @@ const forgot_password_validation = async (req, res) => {
       service: "gmail",
       host: "smtp.gmail.com",
       auth: {
-        user: `${process.env.PURCHASE_EMAIL}`,
-        pass: `${process.env.TEAM_EMAIL_CREDENTIALS}`,
+        user: `helpfromautodrive@gmail.com`,
+        pass: `AllAmerican2!`,
       },
     })
   );
@@ -27,7 +27,8 @@ const forgot_password_validation = async (req, res) => {
     req.flash("error", "Email does not exist. Please try again.");
     res.redirect("/forgot-password");
   } else {
-    const JWT_SECRET = process.env.JWT_SECRET;
+    const JWT_SECRET =
+      "ZaLReWHDTMOxq7VGrDFCysCWf3WmlkiR4lRWc1bGCvgPkfzJJVYswbM7Dkn0vmEajhLPbxLuByDAgPc/2uQlQ==";
     const secret = JWT_SECRET;
     const payload = {
       email: query.email,
@@ -40,10 +41,10 @@ const forgot_password_validation = async (req, res) => {
         res.redirect("/login");
       }
     });
-    const link = `${process.env.CLIENT_URL}/reset-password/${token}`;
+    const link = `https://agile-temple-22703.herokuapp.com/reset-password/${token}`;
     try {
       var mailOptions = {
-        from: `${process.env.PURCHASE_EMAIL}`,
+        from: `helpfromautodrive@gmail.com`,
         to: `${query["email"]}`,
         subject: `Password Reset`,
         text: `A password reset request has been initiated by your account. Below is the link to reset your password.

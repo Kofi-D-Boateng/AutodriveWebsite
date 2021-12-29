@@ -20,8 +20,8 @@ const purchased_item = async (req, res) => {
       service: "gmail",
       host: "smtp.gmail.com",
       auth: {
-        user: `${process.env.PURCHASE_EMAIL}`,
-        pass: `${process.env.TEAM_EMAIL_CREDENTIALS}`,
+        user: `helpfromautodrive@gmail.com`,
+        pass: `AllAmerican2!`,
       },
     })
   );
@@ -44,7 +44,7 @@ const purchased_item = async (req, res) => {
           if (!err) {
             try {
               var mailOptions = {
-                from: `${process.env.PURCHASE_EMAIL}`,
+                from: `helpfromautodrive@gmail.com`,
                 to: `${newPurchase.email}`,
                 subject: `Thank you for purchasing through Autodrive!`,
                 text: `Thank you ${newPurchase.name} for ordering through Autodrive! 
