@@ -72,6 +72,10 @@ app.use("/login", login);
 app.use("/signup", signup);
 app.use("/forgot-password", forgot_password);
 app.use("/reset-password", reset_password);
+
+app.get("/googlef8814fd92be9b7c5", (req, res) => {
+  res.render("googlef8814fd92be9b7c5");
+});
 // Logout
 app.get("/logout", async (req, res) => {
   req.flash("success", "You are logged out");
