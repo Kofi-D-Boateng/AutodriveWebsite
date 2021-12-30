@@ -11,6 +11,10 @@ img {
   height: auto;
 }
 
+.nav-link:active {
+  border-bottom: 4px black;
+}
+
 @media screen and (max-width: 767px) {
   * {
     text-align: center;
@@ -20,10 +24,8 @@ img {
   .user-banner hr {
     display: none;
   }
-  .user-image,
-  #CEO-Image,
   .profile-edit-button {
-    margin: 0 0 10% 0;
+    margin: 10% 0 5% 0;
   }
   .profile-edit-button a {
     max-width: 43%;
@@ -92,6 +94,9 @@ img {
 @media screen and (max-width: 767px) {
   #main-div-one {
     background-position: center;
+  }
+  #social-logos a {
+    display: none;
   }
 }
 
@@ -234,17 +239,13 @@ input {
   text-align: left;
 }
 
-#social-logo {
-  text-align: right;
-}
-
 #linkedin {
   margin-left: 20px;
   margin-right: 20px;
 }
 
 #Employee-Image {
-  max-width: 50%;
+  max-width: 35%;
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */

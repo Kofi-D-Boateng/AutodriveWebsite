@@ -1,113 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('partials/head.ejs') %>
-  </head>
-  <body>
-    <%- include(navbar)%>
-    <!--ABOUT PAGE CONTENT-->
-    <section class="ad-about">
-      <div class="container-lg">
-        <div class="row">
-          <div class="col-md-6">
-            <img
-              src="/public/photos/programming.svg"
-              style="width: 100%"
-              alt="img.png"
-            />
-          </div>
-          <div class="ad-about__sec1 col-md-6">
-            <h4 class="h2 mt-5 fw-bold">Who we are</h4>
-            <p class="mt-5">
-              We help freelancers, and startups to mid-tier companies stay ahead
-              of the curve with services ranging from web development to data
-              analytics. We pride ourselves on good work, excellent customer
-              service, and making business decisions possible for little guys.
-            </p>
-          </div>
+
+<head>
+  <%- include('partials/head.ejs') %>
+</head>
+
+<body>
+  <%- include(navbar)%>
+  <!--ABOUT PAGE CONTENT-->
+  <section class="ad-about">
+    <div class="container-lg">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="/public/photos/programming.svg" alt="img.png" />
+        </div>
+        <div class="ad-about__sec1 col-md-6">
+          <h4 class="h2 mt-5 fw-bold">Who we are</h4>
+          <p class="mt-5">
+            We help freelancers, and startups to mid-tier companies stay ahead
+            of the curve with services ranging from web development to data
+            analytics. We pride ourselves on good work, excellent customer
+            service, and making business decisions possible for little guys.
+          </p>
         </div>
       </div>
-    </section>
-    <!--Background info NEEDS TO BE FIXED-->
-    <section class="ad-about__two">
-      <div class="container-lg">
-        <div class="row">
-          <div class="ad-about__sec2 col-md-6">
-            <h4 class="h2 fw-bold">
-              We help you make decision moves that give you a sturdy foundation
-            </h4>
-            <p class="mt-5">
-              Build your foundation by picking the latest technology, frameworks
-              and letting us do the rest. We will walk you through the pros and
-              cons of each decision until you get exactly what you want.
-            </p>
-          </div>
-          <div class="col-md-6 mt-5 mb-5">
-            <img
-              style="width: 100%"
-              src="/public/photos/construct.svg"
-              alt="working.png"
-            />
-          </div>
+    </div>
+  </section>
+  <!--Background info NEEDS TO BE FIXED-->
+  <section class="ad-about__two">
+    <div class="container-lg">
+      <div class="row">
+        <div class="ad-about__sec2 col-md-6">
+          <h4 class="h2 fw-bold">
+            We help you make decision moves that give you a sturdy foundation
+          </h4>
+          <p class="mt-5">
+            Build your foundation by picking the latest technology, frameworks
+            and letting us do the rest. We will walk you through the pros and
+            cons of each decision until you get exactly what you want.
+          </p>
+        </div>
+        <div class="col-md-6 mt-5 mb-5">
+          <img src="/public/photos/construct.svg" alt="working.png" />
         </div>
       </div>
-    </section>
-    <!--CEO-->
-    <section class="ad-about__leadership container-fluid">
-      <div class="ad-about__team container-fluid">
-        <p class="text-center" style="font-size: 2.5rem">Leadership</p>
-        <div class="row" id="team">
-          <div class="col-md-7 text-center" id="CEO-Image">
-            <div class="col-md-12">
-              <img
-                id="Employee-Image"
-                src="/public/photos/pfp3.png"
-                alt="CEO.png"
-              />
+    </div>
+  </section>
+  <!--CEO-->
+  <section class="ad-about__leadership container-fluid">
+    <div class="ad-about__team container-fluid">
+      <p class="text-center" style="font-size: 2.5rem">Leadership</p>
+      <div class="row" id="team">
+        <div class="col-md-7 text-center" id="CEO-Image">
+          <div class="col-md-12">
+            <img id="Employee-Image" src="/public/photos/pfp3.png" alt="CEO.png" />
+          </div>
+        </div>
+        <div class="col-md-5" id="bio">
+          <div class="col-md-12">
+            <div class="employee-name col-md-4">
+              <h5 class="h3 fw-bold">Kofi Boateng</h5>
+            </div>
+            <div class="employee-title">
+              <p class="h5">CEO & Founder</p>
+            </div>
+            <div class="d-flex mb-4 socials" id="social-logos">
+              <a id="twitter" href="twitter.com"><i class="fab fa-twitter fa-lg"></i></a>
+              <a id="linkedin" href="https://www.linkedin.com/in/kofi-boateng-0a14281a1/"><i
+                  class="fab fa-linkedin fa-lg"></i></a>
+              <a id="github" href="https://github.com/Swank123"><i class="fab fa-github fa-lg"></i></a>
             </div>
           </div>
-          <div class="col-md-5" id="bio">
-            <div class="row">
-              <div class="col-md-5">
-                <div class="employee-name text-left">
-                  <h5 class="h3 fw-bold">Kofi Boateng</h5>
-                </div>
-                <div class="employee-title">
-                  <p class="h5">CEO & Founder</p>
-                </div>
-              </div>
-              <div class="col-md-5" id="social-logo">
-                <a id="twitter" href="twitter.com"
-                  ><i class="fab fa-twitter fa-lg"></i
-                ></a>
-                <a
-                  id="linkedin"
-                  href="https://www.linkedin.com/in/kofi-boateng-0a14281a1/"
-                  ><i class="fab fa-linkedin fa-lg"></i
-                ></a>
-                <a id="github" href="https://github.com/Swank123"
-                  ><i class="fab fa-github fa-lg"></i
-                ></a>
-              </div>
-              <div class="col-md-12">
-                <p>
-                  Prior to Autodrive, Kofi Boateng created mini game projects to
-                  use around the house for his relatives. After seeing the joy
-                  it brought, he began the deep dive into coding. He has worked
-                  as a cyber security analyst and holds certificates from
-                  renowned certificate distributors, such as Amazon AWS and
-                  CompTIA. He soon realized that in order to fully understand
-                  the world of cybersecurity, he had to become a web developer,
-                  and thus, Autodrive come to fruition.
-                </p>
-              </div>
-              <!-- MAKE YOUR DEVELOPERS PAGE AND PUT IT HERE -->
-              <a href="#" class="text-decoration-none">Learn about me</a>
-            </div>
+          <div class="col-md-12">
+            <p>
+              Prior to Autodrive, Kofi Boateng created mini game projects to
+              use around the house for his relatives. After seeing the joy
+              it brought, he began the deep dive into coding. He has worked
+              as a cyber security analyst and holds certificates from
+              renowned certificate distributors, such as Amazon AWS and
+              CompTIA. He soon realized that in order to fully understand
+              the world of cybersecurity, he had to become a web developer,
+              and thus, Autodrive come to fruition.
+            </p>
+            <a href="#" class="text-decoration-none">Learn about me</a>
           </div>
+          <!-- MAKE YOUR DEVELOPERS PAGE AND PUT IT HERE -->
         </div>
       </div>
-    </section>
-    <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %>
-  </body>
+    </div>
+  </section>
+  <%- include("partials/footer.ejs") %> <%- include("partials/scripts.ejs") %>
+</body>
+
 </html>

@@ -1,11 +1,9 @@
 // variables
-$font-weights: (
-  "regular": 400,
+$font-weights: ("regular": 400,
   "medium": 500,
   "bold": 700,
 );
-$button: (
-  "full": 100%,
+$button: ("full": 100%,
   "medium": 50%,
 );
 
@@ -13,12 +11,18 @@ $button: (
 * {
   font-family: "Roboto", sans-serif;
 }
+
 p {
   font-size: 1.3rem;
 }
+
 img {
   width: 100%;
   height: auto;
+}
+
+.nav-link:active {
+  border-bottom: 4px black;
 }
 
 @media screen and (max-width: 767px) {
@@ -26,18 +30,21 @@ img {
     text-align: center;
     list-style: none;
   }
+
   .user-bio,
   .user-banner hr {
     display: none;
   }
-  .user-image,
-  #CEO-Image,
+
+
   .profile-edit-button {
-    margin: 0 0 10% 0;
+    margin: 10% 0 5% 0;
   }
+
   .profile-edit-button a {
     max-width: 43%;
   }
+
   img {
     width: 80%;
     height: auto;
@@ -49,24 +56,30 @@ img {
   -webkit-animation: cssAnimation 5s forwards;
   animation: cssAnimation 5s forwards;
 }
+
 @keyframes cssAnimation {
   0% {
     opacity: 1;
   }
+
   90% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
 }
+
 @-webkit-keyframes cssAnimation {
   0% {
     opacity: 1;
   }
+
   90% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
@@ -81,6 +94,7 @@ img {
 .sneak-peak-banner {
   margin: 20% 0 0 0;
 }
+
 .sneak-peak-banner img {
   max-width: 100%;
 }
@@ -104,6 +118,10 @@ img {
   #main-div-one {
     background-position: center;
   }
+
+  #social-logos a {
+    display: none;
+  }
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -118,6 +136,7 @@ img {
 .ad-development__info {
   color: white;
 }
+
 .ad-development__info h1,
 .ad-development__title h1 {
   font-weight: map-get($map: $font-weights, $key: "bold");
@@ -157,6 +176,7 @@ img {
   font-size: 1.4rem;
   font: bold;
 }
+
 .ad-analytics__info a:hover {
   color: black;
   cursor: pointer;
@@ -247,9 +267,7 @@ input {
   text-align: left;
 }
 
-#social-logo {
-  text-align: right;
-}
+
 
 #linkedin {
   margin-left: 20px;
@@ -257,7 +275,7 @@ input {
 }
 
 #Employee-Image {
-  max-width: 50%;
+  max-width: 35%;
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -393,12 +411,14 @@ input {
 
 /* footer */
 @media screen and (max-width: 600px) {
+
   #social-col,
   #product-col,
   #contact-col,
   #copyright {
     display: none;
   }
+
   .ad-analytics__contain {
     padding-bottom: 0;
   }

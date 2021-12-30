@@ -1,81 +1,36 @@
 <div class="col-md-6 account-items">
   <div class="user-banner">
     <div class="user-image">
-      <label
-        for="imageInput"
-        title="Change profile picture"
-        id="pfp-link-label"
-      >
+      <label for="imageInput" title="Change profile picture" id="pfp-link-label">
         <img src="/profile/<%=userPFP%>" id="profile-image" alt="img.png" />
       </label>
-      <form
-        method="POST"
-        action="/profile/avatar"
-        enctype="multipart/form-data"
-      >
-        <input
-          type="file"
-          accpet=".png, .jpg, .jpeg"
-          name="avatar"
-          id="imageInput"
-          style="display: none"
-          required
-        />
+      <form method="POST" action="/profile/avatar" enctype="multipart/form-data">
+        <input type="file" accpet=".png, .jpg, .jpeg" name="avatar" id="imageInput" style="display: none" required />
         <button class="btn btn-dark btn-sm col-5 mt-3" type="submit">
           Change profile picture
         </button>
       </form>
     </div>
     <div class="profile-edit-button col-md-6 mt-3 pt-3">
-      <a
-        class="btn btn-dark btn-sm col-10"
-        data-bs-toggle="collapse"
-        href="#collapseEditForm"
-        >Edit your profile</a
-      >
+      <a class="btn btn-dark btn-sm col-10" data-bs-toggle="collapse" href="#collapseEditForm">Edit your profile</a>
       <div class="collapse mt-4" id="collapseEditForm">
         <form class="updateForm" action="/profile/update" method="post">
           <div class="d-grid mb-2">
-            <input
-              class="form-control form-control-sm"
-              id="username"
-              type="text"
-              name="username"
-              placeholder="Username"
-            />
+            <input class="form-control form-control-sm" id="username" type="text" name="username"
+              placeholder="Username" />
           </div>
           <div class="d-grid mb-2">
-            <input
-              class="form-control form-control-sm"
-              type="text"
-              id="company"
-              name="company"
-              placeholder="Company"
-            />
+            <input class="form-control form-control-sm" type="text" id="company" name="company" placeholder="Company" />
           </div>
           <div class="d-grid mb-2">
-            <input
-              class="form-control form-control-sm"
-              type="text"
-              id="location"
-              name="location"
-              placeholder="Location"
-            />
+            <input class="form-control form-control-sm" type="text" id="location" name="location"
+              placeholder="Location" />
           </div>
           <div class="d-grid mb-2">
-            <input
-              class="form-control form-control-sm"
-              type="text"
-              id="position"
-              name="position"
-              placeholder="Position"
-            />
+            <input class="form-control form-control-sm" type="text" id="position" name="position"
+              placeholder="Position" />
           </div>
-          <button
-            class="btn btn-success btn-sm col-12"
-            id="submitButton"
-            type="submit"
-          >
+          <button class="btn btn-success btn-sm col-12" id="submitButton" type="submit">
             Save
           </button>
         </form>
