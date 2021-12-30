@@ -89,8 +89,6 @@ const profile_profile_update = async (req, res) => {
                 foundUser.username = newUpdate["username"];
               } else {
                 req.flash("error", "username is taken");
-                res.redirect("/profile");
-                return;
               }
               if (newUpdate.company.trim().length >= 3) {
                 foundUser.company = newUpdate["company"];
@@ -108,7 +106,6 @@ const profile_profile_update = async (req, res) => {
               });
               break;
             }
-            req.flash("error", "username is taken");
             res.redirect("/profile");
           } else {
             res.redirect("/");
