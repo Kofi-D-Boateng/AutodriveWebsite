@@ -8,7 +8,9 @@ var User = require("../models/user");
 
 const forgot_password_index = (req, res) => {
   let error = req.flash().error || [];
-  res.render("forgot-password", { error });
+  res.render("forgot-password", {
+    error
+  });
 };
 
 const forgot_password_validation = async (req, res) => {
@@ -17,34 +19,39 @@ const forgot_password_validation = async (req, res) => {
       service: "gmail",
       host: "smtp.gmail.com",
       auth: {
-        user: `helpfromautodrive@gmail.com`,
-        pass: `AllAmerican2!`,
+        user: process.env.TEAM_EMAIL,
+        pass: process.env.TEAM_EMAIL_CREDENTIALS,
       },
     })
   );
-  let query = await user.findOne({ email: req.body.email });
+  let query = await user.findOne({
+    email: req.body.email
+  });
   if (query === null) {
     req.flash("error", "Email does not exist. Please try again.");
     res.redirect("/forgot-password");
   } else {
-    const JWT_SECRET =
-      "ZaLReWHDTMOxq7VGrDFCysCWf3WmlkiR4lRWc1bGCvgPkfzJJVYswbM7Dkn0vmEajhLPbxLuByDAgPc/2uQlQ==";
+    const JWT_SECRET = process.env.JWT_SECRET
     const secret = JWT_SECRET;
     const payload = {
       email: query.email,
       id: query.username,
     };
-    const token = jwt.sign(payload, secret, { expiresIn: "5m" });
-    query.updateOne({ resetlink: token }, (err) => {
+    const token = jwt.sign(payload, secret, {
+      expiresIn: "5m"
+    });
+    query.updateOne({
+      resetlink: token
+    }, (err) => {
       if (err) {
         req.flash("error", err);
         res.redirect("/login");
       }
     });
-    const link = `https://agile-temple-22703.herokuapp.com/reset-password/${token}`;
+    const link = process.env.HOSTED_LINK
     try {
       var mailOptions = {
-        from: `helpfromautodrive@gmail.com`,
+        from: process.env.TEAM_EMAIL,
         to: `${query["email"]}`,
         subject: `Password Reset`,
         text: `A password reset request has been initiated by your account. Below is the link to reset your password.

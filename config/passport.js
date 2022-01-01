@@ -15,17 +15,16 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(
-  new GoogleStrategy(
-    {
-      clientID:
-        "575180439533-mtehng966fs87l2sthgi3vm7gr831s3g.apps.googleusercontent.com",
-      clientSecret: "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",
-      callbackURL:
-        "https://agile-temple-22703.herokuapp.com/login/auth/google/callback",
-      userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
+  new GoogleStrategy({
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CLIENT_CALLBACK,
+      userProfileURL: process.env.GOOGLE_CLIENT_PROFILE,
     },
     function (accessToken, refreshToken, profile, cb) {
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      User.findOrCreate({
+        googleId: profile.id
+      }, function (err, user) {
         return cb(err, user);
       });
     }

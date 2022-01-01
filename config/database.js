@@ -4,8 +4,7 @@ var mongoose = require("mongoose");
 require("dotenv").config();
 
 let dbConnect = mongoose.connect(
-  "mongodb+srv://autodrive-admin-1:lamarrazorback2!@autodriveone.70icx.mongodb.net/userDB",
-  {
+  process.env.DB_HOST, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }

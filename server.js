@@ -23,6 +23,7 @@ const login = require("./routes/login.js");
 const signup = require("./routes/signup.js");
 const forgot_password = require("./routes/forgot-password.js");
 const reset_password = require("./routes/reset-password.js");
+const checkout = require("./routes/checkout.js")
 
 // PORT
 const port = 3000;
@@ -37,7 +38,9 @@ app.set("view cache", false);
 app.use(favicon(__dirname + "/public/favicon.ico"));
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+  extended: true
+}));
 app.use(cookieParser());
 app.use("/public", express.static("public"));
 app.use(flash());
@@ -45,8 +48,7 @@ app.use(flash());
 // COOKIES AND SESSION
 app.use(
   session({
-    secret:
-      "cCbNXsMTf6R0mCpJf+PBBX8GpXCyQpPzQOu75lOwfR488r00hm2FBUUdue2gRWmC4eiArCup4+CI8DU8Lu6FFw==",
+    secret: "cCbNXsMTf6R0mCpJf+PBBX8GpXCyQpPzQOu75lOwfR488r00hm2FBUUdue2gRWmC4eiArCup4+CI8DU8Lu6FFw==",
     resave: false,
     saveUninitialized: false,
   })
@@ -72,6 +74,7 @@ app.use("/login", login);
 app.use("/signup", signup);
 app.use("/forgot-password", forgot_password);
 app.use("/reset-password", reset_password);
+app.use("/checkout", checkout);
 
 // Logout
 app.get("/logout", async (req, res) => {
@@ -83,7 +86,9 @@ app.get("/logout", async (req, res) => {
 
 app.listen(process.env.PORT || port, (err, done) => {
   if (!err) {
-    console.log({ message: "success!" });
+    console.log({
+      message: "success!"
+    });
   } else {
     return err;
   }

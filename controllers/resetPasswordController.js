@@ -3,19 +3,24 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 const reset_password_index = async (req, res) => {
-  const { token } = req.params;
+  const {
+    token
+  } = req.params;
   if (!token) {
     req.flash("error", "The link you clicked on is invalid.");
     res.redirect("/");
     return;
   } else {
-    const secret =
-      "ZaLReWHDTMOxq7VGrDFCysCWf3WmlkiR4lRWc1bGCvgPkfzJJVYswbM7Dkn0vmEajhLPbxLuByDAgPc/2uQlQ==";
+    const secret = process.env.JWT_SECRET
     jwt.verify(token, secret, (err, decodedData) => {
       if (!err) {
         let verifiedUser = decodedData.id;
         const error = req.flash().error || [];
-        res.render("reset-password", { token, error, username: verifiedUser });
+        res.render("reset-password", {
+          token,
+          error,
+          username: verifiedUser
+        });
       } else {
         res.send(
           "There was an error with the link. Please request another one."
@@ -26,12 +31,18 @@ const reset_password_index = async (req, res) => {
 };
 
 const reset_password_validation = async (req, res) => {
-  const { username, newPassword, confirmedPassword } = req.body;
-  let query = await User.findOne({ username: username });
+  const {
+    username,
+    newPassword,
+    confirmedPassword
+  } = req.body;
+  let query = await User.findOne({
+    username: username
+  });
   // CHECK FOR USERNAME SPRAY & MISMATCH PASSWORD
   jwt.verify(
     query.resetlink,
-    "ZaLReWHDTMOxq7VGrDFCysCWf3WmlkiR4lRWc1bGCvgPkfzJJVYswbM7Dkn0vmEajhLPbxLuByDAgPc/2uQlQ==",
+    process.env.JWT_SECRET,
     async (err) => {
       if (err) {
         req.flash("error", err);

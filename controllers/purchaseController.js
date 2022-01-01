@@ -8,9 +8,13 @@ const purchase_index = async (req, res) => {
   let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
   let navbar = "partials/navbar.ejs";
   if (req.isAuthenticated()) {
-    res.render("pricing", { navbar: navbarLoggedIn });
+    res.render("pricing", {
+      navbar: navbarLoggedIn
+    });
   } else {
-    res.render("pricing", { navbar: navbar });
+    res.render("pricing", {
+      navbar: navbar
+    });
   }
 };
 
@@ -20,8 +24,8 @@ const purchased_item = async (req, res) => {
       service: "gmail",
       host: "smtp.gmail.com",
       auth: {
-        user: `helpfromautodrive@gmail.com`,
-        pass: `AllAmerican2!`,
+        user: process.env.TEAM_EMAIL,
+        pass: process.env.TEAM_EMAIL_CREDENTIALS
       },
     })
   );
@@ -44,7 +48,7 @@ const purchased_item = async (req, res) => {
           if (!err) {
             try {
               var mailOptions = {
-                from: `helpfromautodrive@gmail.com`,
+                from: process.env.TEAM_EMAIL,
                 to: `${newPurchase.email}`,
                 subject: `Thank you for purchasing through Autodrive!`,
                 text: `Thank you ${newPurchase.name} for ordering through Autodrive! 
@@ -71,7 +75,9 @@ const purchased_item = async (req, res) => {
               "error",
               "There was an error with your purchase. Please try again!"
             );
-            res.render("pricing", { navbar: navbarLoggedIn });
+            res.render("pricing", {
+              navbar: navbarLoggedIn
+            });
           }
         });
       }

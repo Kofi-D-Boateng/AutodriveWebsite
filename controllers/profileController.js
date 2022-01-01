@@ -1,12 +1,18 @@
 const User = require("../models/user");
 require("passport");
-const { uploadFile, getFileStream, deleteFile } = require("../routes/s3");
+const {
+  uploadFile,
+  getFileStream,
+  deleteFile
+} = require("../routes/s3");
 const util = require("util");
 const fs = require("fs");
 const unLinkFile = util.promisify(fs.unlink);
 var {
   Parser,
-  transforms: { unwind },
+  transforms: {
+    unwind
+  },
 } = require("json2csv");
 
 const profile_index = (req, res) => {
@@ -50,7 +56,9 @@ const profile_pfp_upload = async (req, res) => {
   if (req.isAuthenticated()) {
     const file = req.file;
     const result = await uploadFile(file);
-    User.findOne({ username: req.user.username }, (err, foundUser) => {
+    User.findOne({
+      username: req.user.username
+    }, (err, foundUser) => {
       if (foundUser) {
         foundUser.userimage = result["Key"];
         foundUser.save((err) => {
@@ -71,8 +79,11 @@ const profile_pfp_upload = async (req, res) => {
 const profile_profile_update = async (req, res) => {
   try {
     if (req.isAuthenticated()) {
-      await User.findOne(
-        { username: req.user.username } || { googleId: req.user.googleId },
+      await User.findOne({
+          username: req.user.username
+        } || {
+          googleId: req.user.googleId
+        },
         (err, foundUser) => {
           if (foundUser) {
             const newUpdate = {
@@ -84,7 +95,11 @@ const profile_profile_update = async (req, res) => {
             while (newUpdate) {
               if (
                 newUpdate.username.trim().length >= 3 &&
-                newUpdate.username !== User.find({ username: { $ne: null } })
+                newUpdate.username !== User.find({
+                  username: {
+                    $ne: null
+                  }
+                })
               ) {
                 foundUser.username = newUpdate["username"];
               } else {
@@ -117,11 +132,15 @@ const profile_profile_update = async (req, res) => {
 };
 const profile_csv = async (req, res) => {
   if (req.isAuthenticated()) {
-    let foundUser = await User.findOne({ username: req.user.username });
+    let foundUser = await User.findOne({
+      username: req.user.username
+    });
     if (foundUser) {
       const userPurchases = foundUser.purchases;
       const fields = ["name", "order", "duration", "asset"];
-      const json2cvsParser = new Parser({ fields });
+      const json2cvsParser = new Parser({
+        fields
+      });
       try {
         const csv = await json2cvsParser.parse(userPurchases);
         res.attachment(`${req.user.username}-purchases.csv`);
@@ -138,13 +157,18 @@ const profile_deletion = async (req, res) => {
   if (req.isAuthenticated()) {
     let checkedBox = req.body.destroy;
     if (checkedBox === "on") {
-      let query = await User.findOne({ username: req.user.username });
+      let query = await User.findOne({
+        username: req.user.username
+      });
       const key = await query.userimage;
-      if (key !== "c2d993a9788cf64656ec07b7079177ea") {
+      if (key !== process.env.PROFILE_PIC_KEY) {
         deleteFile(key);
       }
-      User.findOneAndDelete(
-        { username: req.user.username } || { googleId: req.user.googleId },
+      User.findOneAndDelete({
+          username: req.user.username
+        } || {
+          googleId: req.user.googleId
+        },
         (err) => {
           if (!err) {
             req.flash("success", "Your account was deleted"),
