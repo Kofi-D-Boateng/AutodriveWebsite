@@ -7,9 +7,12 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
-#JSON Packages
-# package.json
-# package-lock.json
+#ENV + JSON
+env
+package.json
+package-lock.json
+
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
