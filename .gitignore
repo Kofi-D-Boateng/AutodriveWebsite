@@ -11,6 +11,7 @@ lerna-debug.log*
 env
 package.json
 package-lock.json
+Procfile
 
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
