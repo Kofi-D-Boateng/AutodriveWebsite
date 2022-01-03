@@ -1,54 +1,23 @@
-<button
-  type="button"
-  class="btn btn-success"
-  data-bs-toggle="modal"
-  data-bs-target="#mlBackdrop"
->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#mlBackdrop">
   Purchase Machine Learning
 </button>
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="mlBackdrop"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="mlBackdrop" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header text-center">
         <h5 class="modal-title" id="staticBackdropLabel">
           Machine Learning Bundle
         </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="/pricing/purchased" method="post">
         <div class="modal-body">
-          <select
-            class="form-select mb-3"
-            name="duration"
-            aria-label="Default select example"
-            required
-          >
-            <option value="">Select duration of service</option>
-            <option value="One month">One month</option>
-            <option value="Three months (Quarterly)">
-              Three months (Quarterly)
-            </option>
-            <option value="Annualy (Year)">Annualy (Year)</option>
+          <select class="form-select mb-3" name="duration" aria-label="Default select example" required>
+            <%-include("./calendar.ejs")%>
           </select>
-          <select
-            class="form-select mb-3"
-            name="order"
-            aria-label="Default select example"
-            required
-          >
+          <select class="form-select mb-3" name="ordertype" aria-label="Default select example" required>
             <option value="">Select type of machine learning</option>
             <option value="Financial Machine Learning">
               Financial Machine Learning
@@ -64,37 +33,16 @@
               Multiple Machine Learning types
             </option>
           </select>
-          <input
-            class="form-control mb-3"
-            type="text"
-            name="asset"
-            placeholder="Data Amount (e.g: 500MB)"
-            required
-          />
-          <input
-            class="form-control mb-3"
-            type="text"
-            name="fullName"
-            placeholder="Full Name"
-            required
-          />
-          <input
-            class="form-control mb-3"
-            type="email"
-            name="email"
-            placeholder="something@youremail.com"
-            required
-          />
+          <input class="form-control mb-3" type="number" name="asset" placeholder="Data Amount in MB (i.e 354MB)"
+            required />
+          <input class="form-control mb-3" type="text" name="fullName" placeholder="Full Name" required />
+          <input class="form-control mb-3" type="email" name="email" placeholder="something@youremail.com" required />
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Close
           </button>
-          <button type="submit" class="btn btn-outline-success">
+          <button type="submit" name="order" value="Machine Learning" class="btn btn-outline-success">
             Purchase
           </button>
         </div>

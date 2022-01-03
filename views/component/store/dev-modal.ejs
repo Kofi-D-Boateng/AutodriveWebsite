@@ -1,106 +1,42 @@
-<button
-  type="button"
-  class="btn btn-success"
-  data-bs-toggle="modal"
-  data-bs-target="#webDevBackdrop"
->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#webDevBackdrop">
   Purchase Web Development
 </button>
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="webDevBackdrop"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="webDevBackdropLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="webDevBackdrop" data-bs-keyboard="false" tabindex="-1" aria-labelledby="webDevBackdropLabel"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header text-center">
         <h5 class="modal-title" id="webDevBackdropLabel">
           Web Development Bundle
         </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="/pricing/purchased" method="post">
         <div class="modal-body">
-          <select
-            class="form-select mb-3"
-            name="duration"
-            aria-label="timeTable"
-            required
-          >
-            <option value="">Timetable for completion</option>
-            <option value="Two months">Two months</option>
-            <option value="Three Months">Three Months</option>
-            <option value="Four Months">Four Months</option>
-            <option value="Five Months">Five Months</option>
-            <option value="Six Months">Six Months</option>
-            <option value="Seven Months">Seven Months</option>
-            <option value="Eight Months">Eight Months</option>
-            <option value="Nine Months">Nine Months</option>
-            <option value="Ten Months">Ten Months</option>
-            <option value="Eleven Months">Eleven Months</option>
-            <option value="One Year">One Year</option>
-            <option value="One Year">One Year +</option>
+          <select class="form-select mb-3" name="duration" aria-label="timeTable" required>
+            <%-include("./calendar.ejs")%>
           </select>
-          <select
-            class="form-select mb-3"
-            name="asset"
-            aria-label="orderType"
-            required
-          >
+          <select class="form-select mb-3" name="order" aria-label="orderType" required>
             <option value="">Select Area of Work</option>
             <option value="Front End">Front End</option>
             <option value="Back End">Back End</option>
             <option value="Full Stack">Full Stack</option>
           </select>
-          <input
-            class="form-control mb-3"
-            type="text"
-            name="host"
-            placeholder="Number of Front-end pages (e.g: six pages)"
-            required
-          />
-          <input
-            class="form-control mb-3"
-            type="text"
-            name="fullName"
-            placeholder="Full Name"
-            required
-          />
-          <input
-            class="form-control mb-3"
-            type="email"
-            name="email"
-            placeholder="something@youremail.com"
-            required
-          />
+          <input class="form-control mb-3" type="number" name="asset"
+            placeholder="Number of Front-end pages (e.g: six pages)" required />
+          <input class="form-control mb-3" type="text" name="fullName" placeholder="Full Name" required />
+          <input class="form-control mb-3" type="email" name="email" placeholder="something@youremail.com" required />
           <p class="fs-6 fw-bold">
             * If you are selecting full stack please read our guidelines for
             Full Stack at <a href="/help">Help</a>
           </p>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Close
           </button>
-          <button
-            type="submit"
-            name="order"
-            value="Web Development"
-            class="btn btn-outline-success"
-          >
+          <button type="submit" class="btn btn-outline-success">
             Purchase
           </button>
         </div>

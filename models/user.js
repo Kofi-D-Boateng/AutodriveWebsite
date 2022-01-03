@@ -42,8 +42,8 @@ const userSchema = new mongoose.Schema({
   },
   purchases: [{
     order: String,
-    duration: String,
-    asset: String,
+    duration: Number,
+    asset: Number,
     name: String,
   }, ],
   userimage: {

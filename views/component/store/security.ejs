@@ -1,83 +1,30 @@
 <!-- Button trigger modal -->
-<button
-  type="button"
-  class="btn btn-success"
-  data-bs-toggle="modal"
-  data-bs-target="#secBackdrop"
->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#secBackdrop">
   Purchase Security
 </button>
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="secBackdrop"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="secBackdrop" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header text-center">
         <h5 class="modal-title" id="staticBackdropLabel">Security Bundle</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="/pricing/purchased" method="post">
         <div class="modal-body">
-          <select
-            class="form-select mb-3"
-            aria-label="Default select example"
-            name="duration"
-            required
-          >
-            <option value="">Select duration</option>
-            <option value="One month">One month</option>
-            <option value="Three months (Quarterly)">
-              Three months (Quarterly)
-            </option>
-            <option value="Annualy (Year)">Annualy (Year)</option>
+          <select class="form-select mb-3" aria-label="Default select example" name="duration" required>
+            <%-include("./calendar.ejs")%>
           </select>
-          <input
-            class="form-control mb-3"
-            type="text"
-            name="asset"
-            placeholder="Number of Host (25 host)"
-            required
-          />
-          <input
-            class="form-control mb-3"
-            type="text"
-            name="fullName"
-            placeholder="Full Name"
-            required
-          />
-          <input
-            class="form-control mb-3"
-            type="email"
-            name="email"
-            placeholder="something@youremail.com"
-            required
-          />
+          <input class="form-control mb-3" type="number" name="asset" placeholder="Number of Host (i.e: 10)" required />
+          <input class="form-control mb-3" type="text" name="fullName" placeholder="Full Name" required />
+          <input class="form-control mb-3" type="email" name="email" placeholder="something@youremail.com" required />
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Close
           </button>
-          <button
-            type="submit"
-            name="order"
-            value="Cyber-Security"
-            class="btn btn-outline-success"
-          >
+          <button type="submit" name="order" value="Cyber Security" class="btn btn-outline-success">
             Purchase
           </button>
         </div>
