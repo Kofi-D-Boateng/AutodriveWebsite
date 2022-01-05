@@ -4,7 +4,7 @@ var router = express.Router();
 require("dotenv").config()
 const checkoutController = require('../controllers/checkoutController')
 
-router.get("/", checkoutController.checkout_index)
+router.get("/:token", checkoutController.checkout_index)
 
 router.post("/create-payment", checkoutController.create_payment)
 

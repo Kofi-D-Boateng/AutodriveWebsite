@@ -55,6 +55,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: ""
   },
+  purchaseToken: {
+    type: String,
+    default: ""
+  },
 }, {
   timestamps: true
 });
