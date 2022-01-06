@@ -4,16 +4,7 @@ paypal.Buttons({
     },
     createOrder: () => {
         return fetch("/checkout/create-payment", {
-            method: "post",
-            headers: {
-                "Content-Type": 'application/json'
-            },
-            body: JSON.stringify({
-                items: [{
-                    order: document.getElementsByClassName("order"),
-                    amount: document.getElementsByClassName("total")
-                }]
-            })
+            method: "POST",
         }).then(res => {
             if (res.ok) return console.log("MADE IT HERE IS ORDER")
             return res.json().then(json => Promise.reject(json))
@@ -25,7 +16,7 @@ paypal.Buttons({
             console.log(e.error)
         })
     },
-    onApprove: (data, actions) => {
+    onApprove: async (data, actions) => {
         return actions.order.capture()
     }
 }).render('#paypal-button-container')

@@ -11,6 +11,7 @@ const createError = require("http-errors");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const favicon = require("serve-favicon");
+const cors = require("cors")
 
 // ROUTES REQUIRED
 const main = require("./routes/main.js");
@@ -44,11 +45,12 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use("/public", express.static("public"));
 app.use(flash());
+app.use(cors())
 
 // COOKIES AND SESSION
 app.use(
   session({
-    secret: "cCbNXsMTf6R0mCpJf+PBBX8GpXCyQpPzQOu75lOwfR488r00hm2FBUUdue2gRWmC4eiArCup4+CI8DU8Lu6FFw==",
+    secret: "some secret",
     resave: false,
     saveUninitialized: false,
   })
