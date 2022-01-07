@@ -2,6 +2,19 @@ require("dotenv").config()
 const paypal = require("@paypal/checkout-server-sdk")
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+var nodemailer = require("nodemailer");
+var smtpTransport = require("nodemailer-smtp-transport");
+
+var transport = nodemailer.createTransport(
+    smtpTransport({
+        service: "gmail",
+        host: "smtp.gmail.com",
+        auth: {
+            user: process.env.TEAM_EMAIL,
+            pass: process.env.TEAM_EMAIL_CREDENTIALS
+        },
+    })
+);
 
 
 const checkout_index = (req, res) => {
@@ -22,7 +35,7 @@ const checkout_index = (req, res) => {
                     productOrder: decodedData["order"],
                     purchaseDuration: decodedData.duration,
                     purchaseAsset: decodedData.asset,
-                    purchaseTotal: decodedData.price,
+                    purchaseTotal: decodedData.displayprice,
                     paypal: process.env.PAYPAL_CLIENT_ID
                 });
             } else {
@@ -34,76 +47,14 @@ const checkout_index = (req, res) => {
     }
 }
 
-const create_paypal_payment = async (req, res) => {
-    const Environment = new paypal.core.SandboxEnvironment()
-    const paypalClient = new paypal.core.PayPalHttpClient(Environment)
-    const request = new paypal.orders.OrdersCreateRequest()
-    const secret = process.env.JWT_SECRET
-    // Since user is already logged in you could just grab token off of req.user reducing queries to DB.
-    const customer = await User.findOne({
-        username: req.user.username
-    })
-    console.log(customer)
-    const token = req.user.purchaseToken
-
-    const decodedData = await jwt.verify(token, secret)
-    console.log(decodedData)
-    const order = decodedData.order.trim()
-    const totalAmount = decodedData.price
-    console.log(totalAmount)
-    const number = totalAmount.substring(1, 9)
-    console.log(number)
-    const new_num = parseFloat(number)
-    console.log(new_num)
-
-
-
-
-    request.prefer("return=representation");
-    request.requestBody({
-        intent: "CAPTURE",
-        purchase_units: [{
-            amount: {
-                currency_code: 'USD',
-                value: 1033.33,
-                breakdown: {
-                    item_total: {
-                        currency_code: 'USD',
-                        value: 1033.33
-                    },
-                },
-            },
-
-        }]
-    })
-    try {
-        const paypal_order = await paypalClient.execute(request)
-        console.log(paypal_order)
-        console.log(paypal_order.result.purchase_units)
-        res.json({
-            id: paypal_order.result.id
-        })
-    } catch (error) {
-        res.status(500)
-        console.log(error)
-    }
-}
-
-
-
-
 const create_stripe_session = async (req, res) => {
 
     const stripe = require("stripe")(process.env.STRIPE_CREDENTIALS)
     const secret = process.env.JWT_SECRET
     const token = req.user.purchaseToken
-
     const decodedData = await jwt.verify(token, secret)
-    console.log(decodedData)
     const order = decodedData.order.trim()
-    console.log(order)
-    const totalAmount = decodedData.price
-    console.log(totalAmount)
+    const totalAmount = decodedData.price.toFixed(2)
 
     try {
         const session = await stripe.checkout.sessions.create({
@@ -114,7 +65,7 @@ const create_stripe_session = async (req, res) => {
                     product_data: {
                         name: order
                     },
-                    unit_amount: 20000,
+                    unit_amount: totalAmount * 100,
                 },
                 quantity: 1,
             }],
@@ -122,10 +73,34 @@ const create_stripe_session = async (req, res) => {
             success_url: `${process.env.CLIENT_URL}`,
             cancel_url: `${process.env.CLIENT_URL}/login`,
         })
-        console.log(session.url)
         res.json({
-            url: session.url
+            url: session["url"]
         })
+        req.flash("success", "Your payment was successful.")
+        try {
+            setTimeout(() => {
+                var mailOptions = {
+                    from: process.env.TEAM_EMAIL,
+                    to: `${decodedData.email}`,
+                    subject: `Thank you for purchasing through Autodrive!`,
+                    text: `Thank you ${decodedData.name} for ordering through Autodrive! 
+                          Your order of ${decodedData.order} for ${decodedData.duration} months on ${req.user.updatedAt} was processed. 
+                          A representative from our team will reach out to you momentarily!
+
+
+                          Autodrive
+                          Arlington, Texas`,
+                };
+                transport.sendMail(mailOptions, (err) => {
+                    if (!err) {
+                        req.flash("success", "Your purchase was successful")
+                    }
+                });
+            }, 10000)
+        } catch (error) {
+            throw error;
+        }
+
     } catch (error) {
         res.status(500)
         console.log(error)
@@ -135,6 +110,5 @@ const create_stripe_session = async (req, res) => {
 
 module.exports = {
     checkout_index,
-    create_paypal_payment,
     create_stripe_session
 }

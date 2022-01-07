@@ -1,7 +1,5 @@
 "use strict";
 var User = require("../models/user");
-var nodemailer = require("nodemailer");
-var smtpTransport = require("nodemailer-smtp-transport");
 require("dotenv").config();
 const {
   MongoClient
@@ -14,7 +12,6 @@ const formatter = new Intl.NumberFormat('en-US', {
 const url = process.env.MONGO_CLIENT_DB
 const dbName = process.env.MONGO_CLIENT_DBNAME
 const jwt = require("jsonwebtoken");
-const user = require("../models/user");
 const JWT_SECRET = process.env.JWT_SECRET
 const secret = JWT_SECRET;
 
@@ -34,16 +31,6 @@ const purchase_index = async (req, res) => {
 };
 
 const purchased_item = async (req, res) => {
-  var transport = nodemailer.createTransport(
-    smtpTransport({
-      service: "gmail",
-      host: "smtp.gmail.com",
-      auth: {
-        user: process.env.TEAM_EMAIL,
-        pass: process.env.TEAM_EMAIL_CREDENTIALS
-      },
-    })
-  );
   if (!req.isAuthenticated()) {
     res.redirect("/login");
   } else {
@@ -64,6 +51,7 @@ const purchased_item = async (req, res) => {
         name: newPurchase.order
       }, async (err, result) => {
         const priceAdjustment = []
+        const webDevPrice = []
         if (!err) {
           if (result["name"] == "Cyber Security") {
             try {
@@ -80,9 +68,9 @@ const purchased_item = async (req, res) => {
               }
             } catch (error) {
               console.log(error)
+              res.redirect("purchase")
             }
           } else if (result["name"] == "Machine Learning") {
-            console.log("WE MADE IT IN SECOND LOGIC LOOP")
             try {
               if (result["duration"] != newPurchase["duration"] || result["stock"] != newPurchase["asset"]) {
                 const amount = result["price"]
@@ -99,42 +87,48 @@ const purchased_item = async (req, res) => {
               }
             } catch (error) {
               console.log(error)
+              res.redirect("purchase")
             }
           } else if (result["name"] != "Machine Learning" && "Cyber Security") {
-            console.log("WE MADE IT IN THIRD LOGIC LOOP")
             const amount = result["price"]
             try {
               if (result["name"] == "Back End") {
                 if (result["duration"] < newPurchase["duration"]) {
                   const price = amount + (30 * newPurchase["duration"])
-                  const USD = formatter.format(price)
-                  console.log(USD)
+                  webDevPrice.push(price)
+
+                } else {
+                  webDevPrice.push(amount)
                 }
               } else if (result["name"] == "Front End" || result["name"] == "Full Stack") {
                 if (result["stock"] < newPurchase["asset"]) {
                   const price = amount + (100 * newPurchase["asset"])
-                  const USD = formatter.format(price)
-                  console.log(USD)
+                  webDevPrice.push(price)
+                } else {
+                  webDevPrice.push(amount)
                 }
               }
             } catch (error) {
               console.log(error)
+              res.redirect("purchase")
             }
           }
         }
-        const totalPrice = (priceAdjustment[0] + priceAdjustment[1])
-        const USD = formatter.format(totalPrice)
+        const totalPrice = webDevPrice.length ? webDevPrice[0] : (priceAdjustment[0] + priceAdjustment[1])
+        const USD = webDevPrice.length ? formatter.format(webDevPrice) : formatter.format(totalPrice)
         const payload = {
+          name: newPurchase.name,
           email: newPurchase.email,
           user: req.user.username,
           order: newPurchase.order,
           duration: newPurchase.duration,
           asset: newPurchase.asset,
-          price: USD
+          displayprice: USD,
+          price: totalPrice
 
         };
         const token = jwt.sign(payload, secret, {
-          expiresIn: "1hr"
+          expiresIn: "20min"
         });
         let query = await User.findById(req.user.id)
         let query_result = await query.updateOne({
@@ -148,44 +142,6 @@ const purchased_item = async (req, res) => {
         }
       })
     })
-    // User.findById(req.user.id, (err, foundUser) => {
-    //   if (foundUser && !err) {
-    //     foundUser.purchases.push(newPurchase);
-    //     foundUser.save((err) => {
-    //       if (!err) {
-    //         // try {
-    //         //   var mailOptions = {
-    //         //     from: process.env.TEAM_EMAIL,
-    //         //     to: `${newPurchase.email}`,
-    //         //     subject: `Thank you for purchasing through Autodrive!`,
-    //         //     text: `Thank you ${newPurchase.name} for ordering through Autodrive! 
-    //         //   Your order of ${newPurchase.order} for ${newPurchase.duration} on ${newPurchase.timestamp} was processed. 
-    //         //   A representative from our team will reach out to you momentarily!
-
-
-    //         //   Autodrive
-    //         //   Arlington, Texas`,
-    //         //   };
-    //         //   transport.sendMail(mailOptions, (err, info) => {
-    //         //     if (!err) {
-    //         //       console.log("Email sent to" + info.response);
-    //         //     }
-    //         //   });
-    //         // } catch (error) {
-    //         //   throw error;
-    //         // }
-    //         req.flash("success", "Purchases was a success!");
-    //         res.redirect("/");
-    //       } else {
-    //         req.flash(
-    //           "error",
-    //           "There was an error with your purchase. Please try again!"
-    //         );
-    //         res.redirect("pricing")
-    //       }
-    //     });
-    //   }
-    // });
   }
 };
 

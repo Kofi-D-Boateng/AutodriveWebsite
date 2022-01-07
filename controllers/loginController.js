@@ -6,11 +6,16 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const login_index = (req, res) => {
   let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
   let navbar = "partials/navbar.ejs";
-  const errors = req.flash().error || [];
+  const errors = req.flash().errors || [];
   if (req.isAuthenticated()) {
-    res.render("login", { navbar: navbarLoggedIn });
+    res.render("login", {
+      navbar: navbarLoggedIn
+    });
   } else {
-    res.render("login", { navbar: navbar, errors });
+    res.render("login", {
+      navbar: navbar,
+      errors
+    });
   }
 };
 

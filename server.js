@@ -25,6 +25,7 @@ const signup = require("./routes/signup.js");
 const forgot_password = require("./routes/forgot-password.js");
 const reset_password = require("./routes/reset-password.js");
 const checkout = require("./routes/checkout.js")
+const error_routing = require("./routes/error")
 
 // PORT
 const port = 3000;
@@ -45,7 +46,14 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use("/public", express.static("public"));
 app.use(flash());
-app.use(cors())
+
+// WHITELIST APIS 
+const whitelist = ['*', 'https://api2.amplitude.com/2/httpapi', 'https://www.sandbox.paypal.com/smart/button?', 'https://www.paypal.com', 'https://c.sandbox.paypal.com']
+app.use(cors({
+  origin: whitelist,
+  methods: ['GET', "POST"]
+
+}))
 
 // COOKIES AND SESSION
 app.use(
@@ -53,6 +61,9 @@ app.use(
     secret: "some secret",
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      sameSite: 'strict'
+    }
   })
 );
 
@@ -77,14 +88,13 @@ app.use("/signup", signup);
 app.use("/forgot-password", forgot_password);
 app.use("/reset-password", reset_password);
 app.use("/checkout", checkout);
-
-// Logout
 app.get("/logout", async (req, res) => {
   req.flash("success", "You are logged out");
   res.clearCookie("connect.sid");
   req.logout();
   res.redirect("/");
 });
+app.use("*", error_routing)
 
 app.listen(process.env.PORT || port, (err, done) => {
   if (!err) {
