@@ -20,21 +20,31 @@ router.post(
     failureFlash: true,
     successMessage: true,
     successRedirect: "/",
-    successFlash: { type: "success", message: "Successfully logged in." },
+    successFlash: {
+      type: "success",
+      message: "Successfully logged in."
+    },
     failureRedirect: "/login",
-    failureFlash: { type: "error", message: "Invalid username or password" },
+    failureFlash: {
+      type: "errors",
+      message: "Invalid username or password"
+    },
   })
 );
 
 // GOOGLE OAUTH
 router.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile"] })
+  passport.authenticate("google", {
+    scope: ["profile"]
+  })
 );
 
 router.get(
   "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login" }),
+  passport.authenticate("google", {
+    failureRedirect: "/login"
+  }),
   loginController.google_login_auth
 );
 

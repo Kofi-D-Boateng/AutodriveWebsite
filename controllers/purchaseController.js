@@ -44,7 +44,7 @@ const purchased_item = async (req, res) => {
     };
     console.log(newPurchase);
     const mongoClient = new MongoClient(url)
-    const storeConnection = mongoClient.connect(async (err, client) => {
+    mongoClient.connect(async (err, client) => {
       const db = client.db(dbName)
       const storeConnection = db.collection("stores")
       storeConnection.findOne({
@@ -102,7 +102,7 @@ const purchased_item = async (req, res) => {
                 }
               } else if (result["name"] == "Front End" || result["name"] == "Full Stack") {
                 if (result["stock"] < newPurchase["asset"]) {
-                  const price = amount + (100 * newPurchase["asset"])
+                  const price = amount + (60 * newPurchase["asset"])
                   webDevPrice.push(price)
                 } else {
                   webDevPrice.push(amount)

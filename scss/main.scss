@@ -243,6 +243,10 @@ input {
   color: #528bc6;
 }
 
+.ad-about__sec1 {
+  text-align: justify;
+}
+
 .ad-about__two {
   background-color: #528bc6;
 }
@@ -398,9 +402,10 @@ input {
 
 #profile-image {
   max-width: 100%;
+  border-radius: 50px;
   width: auto;
   height: auto;
-  max-height: 100%;
+
 }
 
 #profile-image:hover {
