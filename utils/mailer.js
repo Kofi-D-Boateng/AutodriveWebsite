@@ -12,7 +12,7 @@ var transport = nodemailer.createTransport(
   })
 );
 
-module.exports = mailer = (decodedData) => {
+const purchaseMailer = (decodedData) => {
   const timestamp = new Date().toLocaleDateString();
   var mailOptions = {
     from: "no-reply",
@@ -34,4 +34,29 @@ module.exports = mailer = (decodedData) => {
       return;
     }
   });
+};
+
+const resetMailer = (link) => {
+  var mailOptions = {
+    from: process.env.TEAM_EMAIL,
+    to: `${query["email"]}`,
+    subject: `Password Reset`,
+    text: `A password reset request has been initiated by your account. Below is the link to reset your password.
+              link: ${link}
+
+              Autodrive
+              Arlington, Texas`,
+  };
+  transport.sendMail(mailOptions, (err, info) => {
+    if (!err) {
+      return;
+    } else {
+      console.log(err.message);
+      return;
+    }
+  });
+};
+
+module.exports = {
+  purchaseMailer,
 };

@@ -1,7 +1,6 @@
 "use strict";
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-
 const mailer = require("../utils/mailer");
 
 const checkout_index = (req, res) => {
@@ -36,6 +35,12 @@ const create_stripe_session = async (req, res) => {
   const secret = process.env.JWT_SECRET;
   const token = req.user.purchaseToken;
   const decodedData = jwt.verify(token, secret);
+
+  if (decodedData === false || undefined) {
+    req.flash("error", "Token was not verified.");
+    res.redirect("/");
+    return;
+  }
   const order = decodedData.order.trim();
   const totalAmount = decodedData.price.toFixed(2);
 
