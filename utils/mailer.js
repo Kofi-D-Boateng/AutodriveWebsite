@@ -59,4 +59,5 @@ const resetMailer = (link) => {
 
 module.exports = {
   purchaseMailer,
+  resetMailer,
 };
