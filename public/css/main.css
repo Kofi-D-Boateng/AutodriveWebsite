@@ -9,6 +9,7 @@ p {
 img {
   width: 100%;
   height: auto;
+  border-radius: 100px;
 }
 
 .nav-link:active {
@@ -315,7 +316,8 @@ input {
 }
 
 #fe-row img {
-  height: 700px;
+  height: 500px;
+  border-radius: 100px;
 }
 
 .fe-title {
@@ -338,7 +340,8 @@ input {
 }
 
 #be-row img {
-  height: 700px;
+  height: 500px;
+  border-radius: 100px;
 }
 
 .be-title,

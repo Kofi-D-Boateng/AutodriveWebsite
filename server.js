@@ -7,11 +7,10 @@ const passport = require("passport");
 const path = require("path");
 const ejs = require("ejs");
 const logger = require("morgan");
-const createError = require("http-errors");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const favicon = require("serve-favicon");
-const cors = require("cors")
+const cors = require("cors");
 
 // ROUTES REQUIRED
 const main = require("./routes/main.js");
@@ -24,8 +23,8 @@ const login = require("./routes/login.js");
 const signup = require("./routes/signup.js");
 const forgot_password = require("./routes/forgot-password.js");
 const reset_password = require("./routes/reset-password.js");
-const checkout = require("./routes/checkout.js")
-const error_routing = require("./routes/error")
+const checkout = require("./routes/checkout.js");
+const error_routing = require("./routes/error");
 
 // PORT
 const port = 3000;
@@ -40,20 +39,29 @@ app.set("view cache", false);
 app.use(favicon(__dirname + "/public/favicon.ico"));
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({
-  extended: true
-}));
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 app.use(cookieParser());
 app.use("/public", express.static("public"));
 app.use(flash());
 
-// WHITELIST APIS 
-const whitelist = ['*', 'https://api2.amplitude.com/2/httpapi', 'https://www.sandbox.paypal.com/smart/button?', 'https://www.paypal.com', 'https://c.sandbox.paypal.com']
-app.use(cors({
-  origin: whitelist,
-  methods: ['GET', "POST"]
-
-}))
+// WHITELIST APIS
+const whitelist = [
+  "*",
+  "https://api2.amplitude.com/2/httpapi",
+  "https://www.sandbox.paypal.com/smart/button?",
+  "https://www.paypal.com",
+  "https://c.sandbox.paypal.com",
+];
+app.use(
+  cors({
+    origin: whitelist,
+    methods: ["GET", "POST"],
+  })
+);
 
 // COOKIES AND SESSION
 app.use(
@@ -62,8 +70,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      sameSite: 'strict'
-    }
+      sameSite: "strict",
+    },
   })
 );
 
@@ -94,13 +102,11 @@ app.get("/logout", async (req, res) => {
   req.logout();
   res.redirect("/");
 });
-app.use("*", error_routing)
+app.use("*", error_routing);
 
 app.listen(process.env.PORT || port, (err, done) => {
   if (!err) {
-    console.log({
-      message: "success!"
-    });
+    console.log(`Server is running on ${port}`);
   } else {
     return err;
   }

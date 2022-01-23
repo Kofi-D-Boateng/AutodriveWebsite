@@ -1,9 +1,11 @@
 // variables
-$font-weights: ("regular": 400,
+$font-weights: (
+  "regular": 400,
   "medium": 500,
   "bold": 700,
 );
-$button: ("full": 100%,
+$button: (
+  "full": 100%,
   "medium": 50%,
 );
 
@@ -19,6 +21,7 @@ p {
 img {
   width: 100%;
   height: auto;
+  border-radius: 100px;
 }
 
 .nav-link:active {
@@ -35,7 +38,6 @@ img {
   .user-banner hr {
     display: none;
   }
-
 
   .profile-edit-button {
     margin: 10% 0 5% 0;
@@ -271,8 +273,6 @@ input {
   text-align: left;
 }
 
-
-
 #linkedin {
   margin-left: 20px;
   margin-right: 20px;
@@ -350,7 +350,8 @@ input {
 }
 
 #fe-row img {
-  height: 700px;
+  height: 500px;
+  border-radius: 100px;
 }
 
 .fe-title {
@@ -374,7 +375,8 @@ input {
 }
 
 #be-row img {
-  height: 700px;
+  height: 500px;
+  border-radius: 100px;
 }
 
 .be-title,
@@ -405,7 +407,6 @@ input {
   border-radius: 50px;
   width: auto;
   height: auto;
-
 }
 
 #profile-image:hover {
@@ -418,15 +419,13 @@ input {
 
 .checkout-card {
   border: none;
-  margin: 100px auto
+  margin: 100px auto;
 }
-
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 /* footer */
 @media screen and (max-width: 600px) {
-
   #social-col,
   #product-col,
   #contact-col,
