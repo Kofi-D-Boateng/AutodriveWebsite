@@ -4,29 +4,30 @@ const { uploadFile, getFileStream, deleteFile } = require("../utils/s3");
 const util = require("util");
 const fs = require("fs");
 const unLinkFile = util.promisify(fs.unlink);
-var { Parser } = require("json2csv");
+const { Parser } = require("json2csv");
 
 const profile_index = (req, res) => {
-  const error = req.flash().error || [];
+  const flashMessage = req.flash();
+  console.log(flashMessage);
+  const navbarLoggedIn = "partials/loggedIn-navbar.ejs";
+  // THE .isAuthenticated calls on passport.js to check for authentication into the site.
   if (req.isAuthenticated()) {
+    const { username, company, location, position, createdAt, userimage } =
+      req.user;
+    const createdDate = createdAt.toString().slice(4, 16);
     // QUERY FOR ORDERS
     let id = req.user.id;
     User.findById(id, async (err, foundUser) => {
       if (foundUser) {
-        let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
-        let dateObj = req.user.createdAt;
-        let createdDate = dateObj.toString().slice(4, 16);
-        const error = req.flash().error || [];
-
         res.render("profile", {
-          error,
-          currentUser: req.user.username,
-          currentCompany: req.user.company,
-          currentLocation: req.user.location,
-          currentPosition: req.user.position,
+          flash: flashMessage,
+          currentUser: username ? username : "N/A",
+          currentCompany: company ? company : "N/A",
+          currentLocation: location ? location : "N/A",
+          currentPosition: position ? position : "N/A",
           memberStatus: createdDate,
           navbar: navbarLoggedIn,
-          userPFP: req.user.userimage,
+          userPFP: userimage,
         });
       }
     });
@@ -36,23 +37,26 @@ const profile_index = (req, res) => {
 };
 
 const profile_image = async (req, res) => {
+  const { key } = req.params;
   if (req.isAuthenticated()) {
-    const key = req.params.key;
     const readStream = getFileStream(key);
     readStream.pipe(res);
   }
 };
 
+// UPLOADS PROFILE IMAGE TO AWS S3 BUCKET
 const profile_pfp_upload = async (req, res) => {
+  const { file } = req;
+  const { username } = req.user;
   if (req.isAuthenticated()) {
-    const file = req.file;
     const result = await uploadFile(file);
-    User.findOne(
+    await User.findOne(
       {
-        username: req.user.username,
+        username: username,
       },
-      (foundUser) => {
+      (err, foundUser) => {
         if (foundUser) {
+          // WE ARE SAVING A POINTER TO THE IMAGE IN AWS.
           foundUser.userimage = result["Key"];
           foundUser.save((err) => {
             if (err) {
@@ -63,62 +67,64 @@ const profile_pfp_upload = async (req, res) => {
         }
       }
     );
+    // DELETING PHOTOS FROM BEING SAVED ON BACKEND.
     await unLinkFile(file.path);
     res.redirect("/profile");
+    req.flash("success", "Successfully uploaded photo.");
   } else {
     req.flash("error", "Profile picture was not updated.");
-    res.redirect("login");
+    res.redirect("/profile");
   }
 };
 
 const profile_profile_update = async (req, res) => {
-  try {
-    if (req.isAuthenticated()) {
-      await User.findOne(
-        {
-          username: req.user.username,
-        } || {
-          googleId: req.user.googleId,
-        },
-        (foundUser) => {
-          if (foundUser) {
-            const newUpdate = {
-              username: req.body.username,
-              company: req.body.company,
-              location: req.body.location,
-              position: req.body.position,
-            };
-            if (
-              newUpdate.username.trim().length >= 3 &&
-              newUpdate.username !==
-                User.find({
-                  username: {
-                    $ne: null,
-                  },
-                })
-            ) {
-              foundUser.username = newUpdate["username"];
-            } else {
-              req.flash("error", "username is taken");
-            }
-            if (newUpdate.company.trim().length >= 3) {
-              foundUser.company = newUpdate["company"];
-            }
-            if (newUpdate.location.trim().length >= 3) {
-              foundUser.location = newUpdate["location"];
-            }
-            if (newUpdate.position.trim().length >= 3) {
-              foundUser.position = newUpdate["position"];
-            }
-            foundUser.save();
-            res.redirect("/profile");
-          }
-        }
-      );
-    }
-  } catch (error) {
-    req.flash("error", "Something went wrong updating your info. ");
+  if (!req.isAuthenticated()) {
     res.redirect("/");
+  }
+  const { googleId, username } = req.user;
+  const { body } = req;
+  const newUpdate = {
+    username: body.username,
+    company: body.company,
+    location: body.location,
+    position: body.position,
+  };
+  const doc = await User.findOne({ username: username || googleId });
+  let count = 0;
+  while (count < 4) {
+    if (
+      newUpdate.username.trim().length >= 3 &&
+      newUpdate.username !==
+        (await User.findOne({ username: newUpdate.username }))
+    ) {
+      doc.username = newUpdate["username"];
+      console.log("made it to -> 1");
+    }
+    count++;
+    if (newUpdate.company.trim().length >= 3) {
+      doc.company = newUpdate["company"];
+      console.log("made it to -> 2");
+    }
+    count++;
+    if (newUpdate.location.trim().length >= 3) {
+      doc.location = newUpdate["location"];
+      console.log("made it to -> 3");
+    }
+    count++;
+    if (newUpdate.position.trim().length >= 3) {
+      doc.position = newUpdate["position"];
+      console.log("made it to -> 4");
+    }
+    count++;
+  }
+  try {
+    await doc.save();
+    req.flash("success", "Successfully updated your profile.");
+    res.redirect("/profile");
+  } catch (error) {
+    console.log(error);
+    req.flash("error", "username is taken");
+    res.redirect("/profile");
   }
 };
 const profile_csv = async (req, res) => {
@@ -136,7 +142,7 @@ const profile_csv = async (req, res) => {
         const csv = json2cvsParser.parse(userPurchases);
         res.attachment(`${req.user.username}-purchases.csv`);
         res.status(200).send(csv);
-        req.flash("success", "successful download");
+        req.flash("success", "successfully download");
       } catch (error) {
         req.flash(
           "error",
@@ -149,6 +155,7 @@ const profile_csv = async (req, res) => {
     }
   }
 };
+
 const profile_deletion = async (req, res) => {
   if (req.isAuthenticated()) {
     let checkedBox = req.body.destroy;
@@ -160,7 +167,7 @@ const profile_deletion = async (req, res) => {
       if (key !== process.env.PROFILE_PIC_KEY) {
         deleteFile(key);
       }
-      User.findOneAndDelete(
+      await User.findOneAndDelete(
         {
           username: req.user.username,
         } || {

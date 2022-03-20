@@ -10,6 +10,9 @@ const loginAccountLimiter = rateLimiter({
   windowMs: 2 * 60 * 1000, //2 minutes
   max: 5, //MAXIMUM request for all users to API/All routes (DDoS prohibitor)
   message: "Too many login attempts. Please try again later.",
+  keyGenerator: (req, res) => {
+    console.log(req.ip);
+  },
 });
 
 router.get("/", loginController.login_index);
@@ -22,12 +25,12 @@ router.post(
     successRedirect: "/",
     successFlash: {
       type: "success",
-      message: "Successfully logged in."
+      message: "Successfully logged in.",
     },
     failureRedirect: "/login",
     failureFlash: {
       type: "errors",
-      message: "Invalid username or password"
+      message: "Invalid username or password",
     },
   })
 );
@@ -36,14 +39,14 @@ router.post(
 router.get(
   "/auth/google",
   passport.authenticate("google", {
-    scope: ["profile"]
+    scope: ["profile"],
   })
 );
 
 router.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "/login"
+    failureRedirect: "/login",
   }),
   loginController.google_login_auth
 );

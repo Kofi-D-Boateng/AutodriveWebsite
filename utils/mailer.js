@@ -1,7 +1,7 @@
-var nodemailer = require("nodemailer");
-var smtpTransport = require("nodemailer-smtp-transport");
+const nodemailer = require("nodemailer");
+const smtpTransport = require("nodemailer-smtp-transport");
 
-var transport = nodemailer.createTransport(
+const transport = nodemailer.createTransport(
   smtpTransport({
     service: "gmail",
     host: "smtp.gmail.com",
@@ -14,7 +14,7 @@ var transport = nodemailer.createTransport(
 
 const purchaseMailer = (decodedData) => {
   const timestamp = new Date().toLocaleDateString();
-  var mailOptions = {
+  const mailOptions = {
     from: "no-reply",
     to: `${decodedData.email}`,
     subject: `Thank you for purchasing through Autodrive!`,
@@ -26,14 +26,16 @@ const purchaseMailer = (decodedData) => {
                           Autodrive
                           Arlington, Texas`,
   };
-  transport.sendMail(mailOptions, (err) => {
-    if (!err) {
-      return;
-    } else {
-      console.log(err.message);
-      return;
-    }
-  });
+  try {
+    transport.sendMail(mailOptions, (err) => {
+      if (!err) {
+        return;
+      } else {
+        console.log(err.message);
+        return;
+      }
+    });
+  } catch (error) {}
 };
 
 const resetMailer = (link) => {
@@ -47,14 +49,16 @@ const resetMailer = (link) => {
               Autodrive
               Arlington, Texas`,
   };
-  transport.sendMail(mailOptions, (err, info) => {
-    if (!err) {
-      return;
-    } else {
-      console.log(err.message);
-      return;
-    }
-  });
+  try {
+    transport.sendMail(mailOptions, (err, info) => {
+      if (!err) {
+        return;
+      } else {
+        console.log(err.message);
+        return;
+      }
+    });
+  } catch (error) {}
 };
 
 module.exports = {

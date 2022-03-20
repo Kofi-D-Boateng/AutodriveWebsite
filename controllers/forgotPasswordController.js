@@ -1,8 +1,6 @@
 "use strict";
 const jwt = require("jsonwebtoken");
 var user = require("../models/user");
-const crypto = require("crypto");
-var User = require("../models/user");
 const { resetMailer } = require("../utils/mailer");
 
 const forgot_password_index = (req, res) => {

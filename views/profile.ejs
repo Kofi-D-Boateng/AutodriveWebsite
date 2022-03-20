@@ -6,9 +6,9 @@
   <body>
     <%- include(navbar) %>
     <!--Account Set Up-->
-    <%for(let i=0; i < error.length; i++){ %>
+    <%if(flash["error"] || flash["success"]){ %>
     <div class="container invalidAlert py-4 text-center" id="hideMe">
-      <div class="alert alert-danger" role="alert"><%=error[i]%></div>
+      <div class="<%=flash['error'] ? 'alert alert-danger' : 'alert alert-success'%>" role="alert"><%=flash["error"] ? flash["error"] : flash["success"] && flash["success"]%></div>
     </div>
     <%}%>
     <section class="container-fluid pt-5">
