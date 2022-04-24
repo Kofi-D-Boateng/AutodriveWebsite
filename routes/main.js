@@ -1,10 +1,9 @@
 "use-strict";
 var express = require("express");
+const { navbar, navbarLoggedIn } = require("../utils/constants");
 var router = express.Router();
 
 router.get("/", (req, res) => {
-  let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
-  let navbar = "partials/navbar.ejs";
   const success = req.flash().success || [];
   if (req.isAuthenticated()) {
     res.render("../views/home", {
@@ -16,8 +15,6 @@ router.get("/", (req, res) => {
   }
 });
 router.get("/development", (req, res) => {
-  let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
-  let navbar = "partials/navbar.ejs";
   if (req.isAuthenticated()) {
     res.render("development", { navbar: navbarLoggedIn });
   } else {
@@ -25,8 +22,6 @@ router.get("/development", (req, res) => {
   }
 });
 router.get("/machine-learning", (req, res) => {
-  let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
-  let navbar = "partials/navbar.ejs";
   if (req.isAuthenticated()) {
     res.render("machine-learning", { navbar: navbarLoggedIn });
   } else {
@@ -34,8 +29,6 @@ router.get("/machine-learning", (req, res) => {
   }
 });
 router.get("/cyber-security", (req, res) => {
-  let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
-  let navbar = "partials/navbar.ejs";
   if (req.isAuthenticated()) {
     res.render("cyber-security", { navbar: navbarLoggedIn });
   } else {

@@ -1,20 +1,16 @@
 "use strict";
-const passport = require("passport");
-const rateLimiter = require("express-rate-limit");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const { navbar, navbarLoggedIn } = require("../utils/constants");
 
 const login_index = (req, res) => {
-  let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
-  let navbar = "partials/navbar.ejs";
   const errors = req.flash().errors || [];
   if (req.isAuthenticated()) {
     res.render("login", {
-      navbar: navbarLoggedIn
+      navbar: navbarLoggedIn,
     });
   } else {
     res.render("login", {
       navbar: navbar,
-      errors
+      errors,
     });
   }
 };

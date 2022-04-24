@@ -1,7 +1,10 @@
 var express = require("express");
 var router = express.Router();
 const rateLimiter = require("express-rate-limit");
-const purchaseController = require("../controllers/purchaseController");
+const {
+  purchase_index,
+  purchased_item,
+} = require("../controllers/purchaseController");
 
 // Rate-limiting ruleset
 const accountPurchaseLimiter = rateLimiter({
@@ -10,13 +13,9 @@ const accountPurchaseLimiter = rateLimiter({
   message: "Too many Purchase attempts. Please try again later.",
 });
 
-router.get("/", purchaseController.purchase_index);
+router.get("/", purchase_index);
 
 // PURCHASING AND RECEIPT
-router.post(
-  "/purchased",
-  accountPurchaseLimiter,
-  purchaseController.purchased_item
-);
+router.post("/purchased", accountPurchaseLimiter, purchased_item);
 
 module.exports = router;

@@ -1,10 +1,8 @@
 var express = require("express");
 var router = express.Router();
-var passport = require("passport");
+const { navbar, navbarLoggedIn } = require("../utils/constants");
 
 router.get("/", (req, res) => {
-  let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
-  let navbar = "partials/navbar.ejs";
   if (req.isAuthenticated()) {
     res.render("help", { navbar: navbarLoggedIn });
   } else {

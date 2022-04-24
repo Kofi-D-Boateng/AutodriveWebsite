@@ -1,7 +1,10 @@
 var express = require("express");
 var router = express.Router();
 const rateLimiter = require("express-rate-limit");
-const signupController = require("../controllers/signupController");
+const {
+  signup_index,
+  signup_validation,
+} = require("../controllers/signupController");
 
 // Rate-limiting ruleset
 const createAccountLimiter = rateLimiter({
@@ -10,6 +13,6 @@ const createAccountLimiter = rateLimiter({
   message: "Too many account sign up attempts. Please try again later.",
 });
 
-router.get("/", signupController.signup_index);
-router.post("/auth", createAccountLimiter, signupController.signup_validation);
+router.get("/", signup_index);
+router.post("/auth", createAccountLimiter, signup_validation);
 module.exports = router;

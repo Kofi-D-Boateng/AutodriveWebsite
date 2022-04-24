@@ -15,7 +15,7 @@ const s3 = new aws.S3({
   secretAccessKey,
 });
 
-// UPLOADING AND DOWNLOADING FILES TO S3
+// MAP OF FUNCTIONS FOR UPLOADING AND DOWNLOADING FILES TO S3
 module.exports = {
   uploadFile: (uploadFile = (file) => {
     const fileStream = fs.createReadStream(file.path);

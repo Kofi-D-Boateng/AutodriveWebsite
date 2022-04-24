@@ -1,11 +1,10 @@
 "use strict";
+require("dotenv").config();
 var express = require("express");
 var router = express.Router();
-require("dotenv").config();
+const { navbar, navbarLoggedIn } = require("../utils/constants");
 
 router.get("/", (req, res) => {
-  let navbarLoggedIn = "partials/loggedIn-navbar.ejs";
-  let navbar = "partials/navbar.ejs";
   if (req.isAuthenticated()) {
     res.render("contact", {
       navbar: navbarLoggedIn,

@@ -1,12 +1,18 @@
 "use strict";
 const express = require("express");
 var router = express.Router();
-const User = require("../models/user");
 require("passport");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const rateLimiter = require("express-rate-limit");
-const profileController = require("../controllers/profileController");
+const {
+  profile_csv,
+  profile_deletion,
+  profile_image,
+  profile_index,
+  profile_pfp_upload,
+  profile_profile_update,
+} = require("../controllers/profileController");
 
 // Rate-limiting ruleset
 const accountAbuseLimiter = rateLimiter({
@@ -27,10 +33,10 @@ const csvAbuseLimiter = rateLimiter({
 });
 
 // GET THE ACCOUNT
-router.get("/", profileController.profile_index);
+router.get("/", profile_index);
 
 // GRAB PROFILE PICTURE
-router.get("/:key", profileController.profile_image);
+router.get("/:key", profile_image);
 
 // UPLOAD PROFILE PICTURE
 
@@ -38,28 +44,16 @@ router.post(
   "/avatar",
   upload.single("avatar"),
   accountAbuseLimiter,
-  profileController.profile_pfp_upload
+  profile_pfp_upload
 );
 
 // MAKING UPDATES
-router.post(
-  "/update",
-  accountAbuseLimiter,
-  profileController.profile_profile_update
-);
+router.post("/update", accountAbuseLimiter, profile_profile_update);
 
 // THIS STILL NEEDS TO BE FIXED////////
 // DOWNLOADING CSV OF PURCHASES
-router.post(
-  "/purchased-items/",
-  csvAbuseLimiter,
-  profileController.profile_csv
-);
+router.post("/purchased-items/", csvAbuseLimiter, profile_csv);
 
 // REMOVING ACCOUNT FROM DATABASE
-router.post(
-  "/account/delete",
-  deleteAbuseLimiter,
-  profileController.profile_deletion
-);
+router.post("/account/delete", deleteAbuseLimiter, profile_deletion);
 module.exports = router;

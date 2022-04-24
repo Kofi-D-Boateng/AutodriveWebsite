@@ -3,7 +3,10 @@ var express = require("express");
 var router = express.Router();
 const rateLimiter = require("express-rate-limit");
 const passport = require("passport");
-const loginController = require("../controllers/loginController");
+const {
+  google_login_auth,
+  login_index,
+} = require("../controllers/loginController");
 
 // Rate-limiting ruleset
 const loginAccountLimiter = rateLimiter({
@@ -15,7 +18,7 @@ const loginAccountLimiter = rateLimiter({
   },
 });
 
-router.get("/", loginController.login_index);
+router.get("/", login_index);
 router.post(
   "/auth",
   loginAccountLimiter,
@@ -48,7 +51,7 @@ router.get(
   passport.authenticate("google", {
     failureRedirect: "/login",
   }),
-  loginController.google_login_auth
+  google_login_auth
 );
 
 module.exports = router;

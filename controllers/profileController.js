@@ -5,11 +5,11 @@ const util = require("util");
 const fs = require("fs");
 const unLinkFile = util.promisify(fs.unlink);
 const { Parser } = require("json2csv");
+const { navbarLoggedIn } = require("../utils/constants");
 
 const profile_index = (req, res) => {
   const flashMessage = req.flash();
   console.log(flashMessage);
-  const navbarLoggedIn = "partials/loggedIn-navbar.ejs";
   // THE .isAuthenticated calls on passport.js to check for authentication into the site.
   if (req.isAuthenticated()) {
     const { username, company, location, position, createdAt, userimage } =
@@ -48,7 +48,14 @@ const profile_image = async (req, res) => {
 const profile_pfp_upload = async (req, res) => {
   const { file } = req;
   const { username } = req.user;
-  if (req.isAuthenticated()) {
+
+  if (!req.isAuthenticated()) {
+    req.destroy();
+    res.redirect("/");
+    return;
+  }
+
+  try {
     const result = await uploadFile(file);
     await User.findOne(
       {
@@ -57,7 +64,7 @@ const profile_pfp_upload = async (req, res) => {
       (err, foundUser) => {
         if (foundUser) {
           // WE ARE SAVING A POINTER TO THE IMAGE IN AWS.
-          foundUser.userimage = result["Key"];
+          foundUser.userimage = result.Key;
           foundUser.save((err) => {
             if (err) {
               req.flash("error", "There was an error saving your profile pic");
@@ -71,7 +78,7 @@ const profile_pfp_upload = async (req, res) => {
     await unLinkFile(file.path);
     res.redirect("/profile");
     req.flash("success", "Successfully uploaded photo.");
-  } else {
+  } catch (error) {
     req.flash("error", "Profile picture was not updated.");
     res.redirect("/profile");
   }
@@ -89,35 +96,36 @@ const profile_profile_update = async (req, res) => {
     location: body.location,
     position: body.position,
   };
-  const doc = await User.findOne({ username: username || googleId });
   let count = 0;
-  while (count < 4) {
-    if (
-      newUpdate.username.trim().length >= 3 &&
-      newUpdate.username !==
-        (await User.findOne({ username: newUpdate.username }))
-    ) {
-      doc.username = newUpdate["username"];
-      console.log("made it to -> 1");
-    }
-    count++;
-    if (newUpdate.company.trim().length >= 3) {
-      doc.company = newUpdate["company"];
-      console.log("made it to -> 2");
-    }
-    count++;
-    if (newUpdate.location.trim().length >= 3) {
-      doc.location = newUpdate["location"];
-      console.log("made it to -> 3");
-    }
-    count++;
-    if (newUpdate.position.trim().length >= 3) {
-      doc.position = newUpdate["position"];
-      console.log("made it to -> 4");
-    }
-    count++;
-  }
+
   try {
+    const doc = await User.findOne({ username: username || googleId });
+    while (count < 4) {
+      if (
+        newUpdate.username.trim().length >= 3 &&
+        newUpdate.username !==
+          (await User.findOne({ username: newUpdate.username }))
+      ) {
+        doc.username = newUpdate["username"];
+        console.log("made it to -> 1");
+      }
+      count++;
+      if (newUpdate.company.trim().length >= 3) {
+        doc.company = newUpdate["company"];
+        console.log("made it to -> 2");
+      }
+      count++;
+      if (newUpdate.location.trim().length >= 3) {
+        doc.location = newUpdate["location"];
+        console.log("made it to -> 3");
+      }
+      count++;
+      if (newUpdate.position.trim().length >= 3) {
+        doc.position = newUpdate["position"];
+        console.log("made it to -> 4");
+      }
+      count++;
+    }
     await doc.save();
     req.flash("success", "Successfully updated your profile.");
     res.redirect("/profile");
@@ -157,37 +165,41 @@ const profile_csv = async (req, res) => {
 };
 
 const profile_deletion = async (req, res) => {
-  if (req.isAuthenticated()) {
-    let checkedBox = req.body.destroy;
-    if (checkedBox === "on") {
-      let query = await User.findOne({
-        username: req.user.username,
-      });
-      const key = await query.userimage;
-      if (key !== process.env.PROFILE_PIC_KEY) {
-        deleteFile(key);
-      }
-      await User.findOneAndDelete(
-        {
-          username: req.user.username,
-        } || {
-          googleId: req.user.googleId,
-        },
-        (err) => {
-          if (!err) {
-            req.flash("success", "Your account was deleted."),
-              res.clearCookie("connect.sid");
-            req.logout();
-            res.redirect("/");
-            return;
-          }
-        }
-      );
-    } else {
-      req.flash("error", "Account was not deleted. Please check the box.");
-      req.destroy();
-      res.redirect("/");
+  const checkedBox = req.body.destroy;
+  if (!req.isAuthenticated() || checkedBox !== "on") {
+    req.flash("error", "Account was not deleted. Please check the box.");
+    req.destroy();
+    res.redirect("/");
+    return;
+  }
+  try {
+    let query = await User.findOne({
+      username: req.user.username,
+    });
+    const key = await query.userimage;
+    if (key !== process.env.PROFILE_PIC_KEY) {
+      deleteFile(key);
     }
+    await User.findOneAndDelete(
+      {
+        username: req.user.username,
+      } || {
+        googleId: req.user.googleId,
+      },
+      (err) => {
+        if (!err) {
+          req.flash("success", "Your account was deleted."),
+            res.clearCookie("connect.sid");
+          req.logout();
+          res.redirect("/");
+          return;
+        }
+      }
+    );
+  } catch (error) {
+    req.flash("error", "Account was not deleted. Please check the box.");
+    req.destroy();
+    res.redirect("/");
   }
 };
 module.exports = {

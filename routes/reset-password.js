@@ -4,7 +4,10 @@ var router = express.Router();
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const rateLimiter = require("express-rate-limit");
-const resetPasswordController = require("../controllers/resetPasswordController");
+const {
+  reset_password_index,
+  reset_password_validation,
+} = require("../controllers/resetPasswordController");
 
 // Rate-limiting ruleset
 const rollbackLimiter = rateLimiter({
@@ -13,12 +16,12 @@ const rollbackLimiter = rateLimiter({
   message: "Too many rollback request. Please request another link.",
 });
 
-router.get("/:token", resetPasswordController.reset_password_index);
+router.get("/:token", reset_password_index);
 
 router.post(
   "/changed-password/validation",
   rollbackLimiter,
-  resetPasswordController.reset_password_validation
+  reset_password_validation
 );
 
 module.exports = router;

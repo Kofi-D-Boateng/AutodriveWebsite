@@ -2,7 +2,10 @@ require("dotenv").config();
 var express = require("express");
 var router = express.Router();
 const rateLimiter = require("express-rate-limit");
-const forgotPasswordController = require("../controllers/forgotPasswordController.js");
+const {
+  forgot_password_index,
+  forgot_password_validation,
+} = require("../controllers/forgotPasswordController");
 
 // Rate-limiting ruleset
 const tokenAbuseLimiter = rateLimiter({
@@ -11,11 +14,7 @@ const tokenAbuseLimiter = rateLimiter({
   message: "Too many Purchase attempts. Please try again later.",
 });
 
-router.get("/", forgotPasswordController.forgot_password_index);
+router.get("/", forgot_password_index);
 
-router.post(
-  "/validation",
-  tokenAbuseLimiter,
-  forgotPasswordController.forgot_password_validation
-);
+router.post("/validation", tokenAbuseLimiter, forgot_password_validation);
 module.exports = router;
