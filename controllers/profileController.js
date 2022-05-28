@@ -1,3 +1,4 @@
+"use strict";
 const User = require("../models/user");
 require("passport");
 const { uploadFile, getFileStream, deleteFile } = require("../utils/s3");
@@ -96,6 +97,7 @@ const profile_profile_update = async (req, res) => {
     location: body.location,
     position: body.position,
   };
+
   let count = 0;
 
   try {
@@ -107,22 +109,18 @@ const profile_profile_update = async (req, res) => {
           (await User.findOne({ username: newUpdate.username }))
       ) {
         doc.username = newUpdate["username"];
-        console.log("made it to -> 1");
       }
       count++;
       if (newUpdate.company.trim().length >= 3) {
         doc.company = newUpdate["company"];
-        console.log("made it to -> 2");
       }
       count++;
       if (newUpdate.location.trim().length >= 3) {
         doc.location = newUpdate["location"];
-        console.log("made it to -> 3");
       }
       count++;
       if (newUpdate.position.trim().length >= 3) {
         doc.position = newUpdate["position"];
-        console.log("made it to -> 4");
       }
       count++;
     }
@@ -135,6 +133,7 @@ const profile_profile_update = async (req, res) => {
     res.redirect("/profile");
   }
 };
+
 const profile_csv = async (req, res) => {
   if (req.isAuthenticated()) {
     let foundUser = await User.findOne({
@@ -202,6 +201,7 @@ const profile_deletion = async (req, res) => {
     res.redirect("/");
   }
 };
+
 module.exports = {
   profile_index,
   profile_image,

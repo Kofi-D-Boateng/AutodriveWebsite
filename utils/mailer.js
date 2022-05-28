@@ -1,16 +1,14 @@
+"use strict";
 const nodemailer = require("nodemailer");
-const smtpTransport = require("nodemailer-smtp-transport");
 
-const transport = nodemailer.createTransport(
-  smtpTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    auth: {
-      user: process.env.TEAM_EMAIL,
-      pass: process.env.TEAM_EMAIL_CREDENTIALS,
-    },
-  })
-);
+const transport = nodemailer.createTransport({
+  service: "gmail",
+  host: "smtp.gmail.com",
+  auth: {
+    user: process.env.TEAM_EMAIL,
+    pass: process.env.TEAM_EMAIL_CREDENTIALS,
+  },
+});
 
 const purchaseMailer = (decodedData) => {
   const timestamp = new Date().toLocaleDateString();
